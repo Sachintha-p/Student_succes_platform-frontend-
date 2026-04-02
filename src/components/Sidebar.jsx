@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { User, Briefcase, Search, Users, LogOut, LayoutDashboard } from 'lucide-react';
+import { User, Briefcase, Search, Users, LogOut, LayoutDashboard, Brain, BookOpen, Settings } from 'lucide-react';
 
 const Sidebar = () => {
   // --- 1. STATE FOR REAL USER DATA ---
   const [userData, setUserData] = useState({
     fullName: 'Loading...',
-    email: 'Fetching email...'
+    email: 'Fetching email...',
+    role: 'STUDENT'
   });
 
   const navigate = useNavigate();
@@ -18,7 +19,6 @@ const Sidebar = () => {
     const fetchProfile = async () => {
       if (!token) return;
       try {
-        // Hitting the endpoint we just added in AuthController.java
         const response = await fetch('http://localhost:8080/api/v1/auth/profile', {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -28,10 +28,10 @@ const Sidebar = () => {
 
         if (response.ok) {
           const data = await response.json();
-          // Data contains { fullName, email, role } from backend
           setUserData({
             fullName: data.fullName,
-            email: data.email
+            email: data.email,
+            role: data.role
           });
         }
       } catch (err) {
@@ -47,12 +47,22 @@ const Sidebar = () => {
     navigate('/');
   };
 
-  const menuItems = [
+  const studentItems = [
     { name: 'Profile', icon: <User size={20}/>, path: '/student-dashboard' },
+    { name: 'AI Assistant', icon: <Brain size={20}/>, path: '/ai-assistant' },
+    { name: 'Knowledge Hub', icon: <BookOpen size={20}/>, path: '/knowledge-hub' },
     { name: 'Job Listings', icon: <Briefcase size={20}/>, path: '/student-job-listings' },
     { name: 'ATS Checker', icon: <Search size={20}/>, path: '/ats-checker' },
     { name: 'My Groups', icon: <Users size={20}/>, path: '/my-groups' },
   ];
+
+  const adminItems = [
+    { name: 'Jobs Admin', icon: <Briefcase size={20}/>, path: '/admin-dashboard' },
+    { name: 'Resources Admin', icon: <BookOpen size={20}/>, path: '/admin-knowledge-hub' },
+    { name: 'AI Analytics', icon: <Brain size={20}/>, path: '/admin-ai-assistant' },
+  ];
+
+  const menuItems = userData.role === 'ADMIN' ? adminItems : studentItems;
 
   return (
     <aside className="w-72 bg-[#121826] border-r border-gray-800/50 flex flex-col fixed h-full z-20">
