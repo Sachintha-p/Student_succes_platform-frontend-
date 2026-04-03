@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import Sidebar from '../../components/Sidebar';
-import Module3Header from '../../components/Module3Header';
-import DashboardAccessButton from '../../components/DashboardAccessButton';
+import Sidebar from '../../../../components/Sidebar';
+import DashboardAccessButton from '../../../../components/DashboardAccessButton';
 import { Calendar, MapPin, Users, Clock, Loader2, ChevronRight } from 'lucide-react';
 
 const MyEvents = () => {
@@ -53,7 +52,6 @@ const MyEvents = () => {
 
   return (
     <div className="bg-[#090e17] text-gray-300 font-sans min-h-screen">
-      <Module3Header />
       <DashboardAccessButton />
       
       <div className="flex">

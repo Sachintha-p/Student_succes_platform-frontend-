@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar';
-import DashboardAccessButton from '../../components/DashboardAccessButton';
+import Sidebar from '../../../../components/Sidebar';
+import DashboardAccessButton from '../../../../components/DashboardAccessButton';
 import { ChevronLeft, Save, AlertCircle, CheckCircle } from 'lucide-react';
-import { DatePicker, TimePicker } from './DateTimePicker';
+import { DatePicker, TimePicker } from '../../components/DateTimePicker';
 
 const CreateEvent = () => {
   const navigate = useNavigate();
@@ -145,7 +145,7 @@ const CreateEvent = () => {
     <div className="bg-[#090e17] text-gray-300 font-sans min-h-screen">
       <DashboardAccessButton />
       
-      <div className="flex pt-24">
+      <div className="flex">
         <Sidebar/>
 
         <main className="flex-1 ml-72">

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar';
-import DashboardAccessButton from '../../components/DashboardAccessButton';
+import Sidebar from '../../../../components/Sidebar';
+import DashboardAccessButton from '../../../../components/DashboardAccessButton';
 import { ChevronLeft, Save, AlertCircle, CheckCircle, X, Plus } from 'lucide-react';
-import { DatePicker, TimePicker } from './DateTimePicker';
+import { DatePicker, TimePicker } from '../../components/DateTimePicker';
 
 const CreateMeeting = () => {
   const navigate = useNavigate();
@@ -185,7 +185,7 @@ const CreateMeeting = () => {
     <div className="bg-[#090e17] min-h-screen">
       <DashboardAccessButton />
       
-      <div className="flex pt-24">
+      <div className="flex">
         <Sidebar />
 
       <main className="flex-1 ml-72">

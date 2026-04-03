@@ -8,7 +8,7 @@ import {
   Briefcase,
   Flag,
 } from 'lucide-react';
-import Sidebar from '../../components/Sidebar';
+import Sidebar from '../../../../components/Sidebar';
 
 const GlobalMilestoneTimeline = () => {
   const [data, setData] = useState(null);

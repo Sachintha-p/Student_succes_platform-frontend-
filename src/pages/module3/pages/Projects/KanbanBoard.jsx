@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar';
-import Module3Header from '../../components/Module3Header';
-import DashboardAccessButton from '../../components/DashboardAccessButton';
+import Sidebar from '../../../../components/Sidebar';
+import DashboardAccessButton from '../../../../components/DashboardAccessButton';
 import { ChevronLeft, Plus, Loader2, AlertCircle, Trash2, Edit2, Flag, Calendar } from 'lucide-react';
-import { DatePicker } from './DateTimePicker';
+import { DatePicker } from '../../components/DateTimePicker';
 
 const KanbanBoard = () => {
   const { projectId } = useParams();

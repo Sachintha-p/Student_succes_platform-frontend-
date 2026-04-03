@@ -15,7 +15,7 @@ import {
   AlertTriangle,
   Loader2
 } from 'lucide-react';
-import { DatePicker } from '../module3/DateTimePicker';
+import { DatePicker } from '../module3/components/DateTimePicker';
 
 const AdminJobListings = () => {
   const [jobs, setJobs] = useState([]);

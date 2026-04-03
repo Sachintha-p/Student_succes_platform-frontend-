@@ -14,7 +14,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { useParams } from 'react-router-dom';
-import { DatePicker } from './DateTimePicker';
+import { DatePicker } from '../../components/DateTimePicker';
 
 const MilestoneList = () => {
   const { projectId } = useParams();

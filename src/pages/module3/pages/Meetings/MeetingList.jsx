@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import Sidebar from '../../components/Sidebar';
-import DashboardAccessButton from '../../components/DashboardAccessButton';
+import Sidebar from '../../../../components/Sidebar';
+import DashboardAccessButton from '../../../../components/DashboardAccessButton';
 import { Calendar, MapPin, Link as LinkIcon, Users, Loader2, Plus, ChevronRight, Clock, AlertCircle } from 'lucide-react';
 
 const MeetingList = () => {

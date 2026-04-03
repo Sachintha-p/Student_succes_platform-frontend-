@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar';
-import DashboardAccessButton from '../../components/DashboardAccessButton';
+import Sidebar from '../../../../components/Sidebar';
+import DashboardAccessButton from '../../../../components/DashboardAccessButton';
 import { Briefcase, Plus, ChevronRight, Loader2, Calendar, Users, AlertCircle, BarChart2 } from 'lucide-react';
-import { DatePicker } from './DateTimePicker';
+import { DatePicker } from '../../components/DateTimePicker';
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);

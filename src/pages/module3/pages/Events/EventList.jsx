@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import Sidebar from '../../components/Sidebar';
-import Module3Header from '../../components/Module3Header';
-import DashboardAccessButton from '../../components/DashboardAccessButton';
+import Sidebar from '../../../../components/Sidebar';
+import DashboardAccessButton from '../../../../components/DashboardAccessButton';
 import { Search, Calendar, MapPin, Users, X, Loader2, Plus, Clock, Tag } from 'lucide-react';
 
 const EventList = () => {

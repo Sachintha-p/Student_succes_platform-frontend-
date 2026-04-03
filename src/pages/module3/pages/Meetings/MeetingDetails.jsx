@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar';
-import DashboardAccessButton from '../../components/DashboardAccessButton';
+import Sidebar from '../../../../components/Sidebar';
+import DashboardAccessButton from '../../../../components/DashboardAccessButton';
 import { ChevronLeft, Calendar, MapPin, Link as LinkIcon, CheckCircle, Loader2, AlertCircle, X, Plus } from 'lucide-react';
 
 const MeetingDetails = () => {
@@ -162,10 +162,9 @@ const MeetingDetails = () => {
 
   return (
     <div className="bg-[#090e17] min-h-screen">
-      <Module3Header />
       <DashboardAccessButton />
       
-      <div className="flex pt-24">
+      <div className="flex">
         <Sidebar />
 
       <main className="flex-1 ml-72 p-10 text-gray-300 font-sans" style={{minHeight: '100vh'}}>
