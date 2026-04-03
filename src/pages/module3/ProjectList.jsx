@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
-import Module3Header from '../../components/Module3Header';
 import DashboardAccessButton from '../../components/DashboardAccessButton';
 import { Briefcase, Plus, ChevronRight, Loader2, Calendar, Users, AlertCircle, BarChart2 } from 'lucide-react';
 import { DatePicker } from './DateTimePicker';
@@ -174,10 +173,9 @@ const ProjectList = () => {
 
   return (
     <div className="bg-[#090e17] text-gray-300 font-sans min-h-screen">
-      <Module3Header />
       <DashboardAccessButton />
       
-      <div className="flex pt-24">
+      <div className="flex">
         <Sidebar />
 
       <main className="flex-1 ml-72">

@@ -367,10 +367,9 @@ const KanbanBoard = () => {
 
   return (
     <div className="bg-[#090e17] text-gray-300 font-sans min-h-screen">
-      <Module3Header />
       <DashboardAccessButton />
       
-      <div className="flex pt-24">
+      <div className="flex">
         <Sidebar />
 
       <main className="flex-1 ml-72">

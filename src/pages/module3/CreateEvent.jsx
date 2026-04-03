@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
-import Module3Header from '../../components/Module3Header';
 import DashboardAccessButton from '../../components/DashboardAccessButton';
 import { ChevronLeft, Save, AlertCircle, CheckCircle } from 'lucide-react';
 import { DatePicker, TimePicker } from './DateTimePicker';
@@ -144,7 +143,6 @@ const CreateEvent = () => {
 
   return (
     <div className="bg-[#090e17] text-gray-300 font-sans min-h-screen">
-      <Module3Header/>
       <DashboardAccessButton />
       
       <div className="flex pt-24">

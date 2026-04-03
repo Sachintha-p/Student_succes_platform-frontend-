@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Sidebar from '../../components/Sidebar';
-import Module3Header from '../../components/Module3Header';
 import DashboardAccessButton from '../../components/DashboardAccessButton';
 import { Calendar, MapPin, Link as LinkIcon, Users, Loader2, Plus, ChevronRight, Clock, AlertCircle } from 'lucide-react';
 
@@ -123,10 +122,9 @@ const MeetingList = () => {
 
   return (
     <div className="bg-[#090e17] min-h-screen">
-      <Module3Header />
       <DashboardAccessButton />
       
-      <div className="flex pt-24">
+      <div className="flex">
         <Sidebar />
 
       <main className="flex-1 ml-72">

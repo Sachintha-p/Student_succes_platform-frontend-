@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
-import Module3Header from '../../components/Module3Header';
 import DashboardAccessButton from '../../components/DashboardAccessButton';
 import { ChevronLeft, Calendar, MapPin, Link as LinkIcon, CheckCircle, Loader2, AlertCircle, X, Plus } from 'lucide-react';
 

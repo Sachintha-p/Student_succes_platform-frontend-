@@ -10,8 +10,7 @@ const Sidebar = () => {
   });
 
   const [expandedSections, setExpandedSections] = useState({
-    menu: true,
-    module3: true
+    menu: true
   });
 
   const navigate = useNavigate();
@@ -64,13 +63,9 @@ const Sidebar = () => {
     { name: 'Job Listings', icon: <Briefcase size={18}/>, path: '/student-job-listings' },
     { name: 'ATS Checker', icon: <Search size={18}/>, path: '/ats-checker' },
     { name: 'My Groups', icon: <Users size={18}/>, path: '/my-groups' },
-  ];
-
-  const module3Items = [
     { name: 'Events', icon: <Calendar size={18}/>, path: '/module3' },
     { name: 'Meetings', icon: <Users size={18}/>, path: '/module3-meetings' },
     { name: 'Projects', icon: <CheckSquare size={18}/>, path: '/module3-projects' },
-    { name: 'Milestones', icon: <Flag size={18}/>, path: '/module3-milestones' },
   ];
 
   const isActive = (path) => {
@@ -98,7 +93,7 @@ const Sidebar = () => {
             onClick={() => toggleSection('menu')}
             className="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider hover:text-gray-300 transition-colors"
           >
-            <span>Main Menu</span>
+            <span>Menu</span>
             <ChevronDown 
               size={14} 
               style={{
@@ -110,42 +105,6 @@ const Sidebar = () => {
           {expandedSections.menu && (
             <ul className="space-y-1 mt-3">
               {menuItems.map((item) => (
-                <li key={item.name}>
-                  <button 
-                    onClick={() => navigate(item.path)}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg font-medium text-sm transition-all ${
-                      isActive(item.path)
-                        ? 'bg-[#00d09c]/15 text-[#00d09c] border border-[#00d09c]/30' 
-                        : 'text-gray-400 hover:text-gray-200 hover:bg-[#1a2230]/60'
-                    }`}
-                  >
-                    <span className="flex-shrink-0">{item.icon}</span>
-                    <span>{item.name}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        {/* Module 3 Section */}
-        <div className="border-t border-gray-800/50 pt-6">
-          <button
-            onClick={() => toggleSection('module3')}
-            className="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider hover:text-gray-300 transition-colors"
-          >
-            <span>Module 3</span>
-            <ChevronDown 
-              size={14}
-              style={{
-                transform: expandedSections.module3 ? 'rotate(0deg)' : 'rotate(-90deg)',
-                transition: 'transform 0.2s'
-              }}
-            />
-          </button>
-          {expandedSections.module3 && (
-            <ul className="space-y-1 mt-3">
-              {module3Items.map((item) => (
                 <li key={item.name}>
                   <button 
                     onClick={() => navigate(item.path)}

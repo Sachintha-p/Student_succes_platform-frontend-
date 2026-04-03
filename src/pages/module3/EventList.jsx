@@ -90,12 +90,9 @@ const EventList = () => {
 
   return (
     <div className="bg-[#090e17] text-gray-300 font-sans min-h-screen">
-      <Module3Header />
       <DashboardAccessButton />
-      
-      <div className="flex pt-24">
+      <div className="flex">
         <Sidebar />
-
         <main className="flex-1 ml-72">
         {/* Hero Section */}
         <div className="bg-gradient-to-b from-[#00d09c]/10 to-transparent border-b border-gray-800/50 px-10 py-12">

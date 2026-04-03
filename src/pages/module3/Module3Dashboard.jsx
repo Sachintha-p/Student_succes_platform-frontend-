@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Module3Header from '../../components/Module3Header';
 import { Calendar, Video, Briefcase, Loader2, Lock, AlertCircle, Users, MapPin, Clock, Tag, LogOut, Trash2, Edit, X, Save } from 'lucide-react';
 
 const Module3Dashboard = () => {
@@ -261,9 +260,7 @@ const Module3Dashboard = () => {
   // --- MAIN DASHBOARD ---
   return (
     <div className="min-h-screen bg-[#090e17]">
-      <Module3Header />
-
-      <div className="pt-32">
+      <div className="pt-24">
         {/* Hero Section */}
         <div className="bg-gradient-to-r from-[#121826] to-[#1a2332] border-b border-gray-800 py-12">
           <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">

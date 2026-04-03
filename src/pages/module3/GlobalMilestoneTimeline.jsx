@@ -9,7 +9,6 @@ import {
   Flag,
 } from 'lucide-react';
 import Sidebar from '../../components/Sidebar';
-import Module3Header from '../../components/Module3Header';
 
 const GlobalMilestoneTimeline = () => {
   const [data, setData] = useState(null);
@@ -75,7 +74,6 @@ const GlobalMilestoneTimeline = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#090e17] flex flex-col">
-        <Module3Header />
         <div className="flex flex-1 pt-24">
           <Sidebar />
           <div className="flex-1 flex items-center justify-center">
@@ -110,9 +108,7 @@ const GlobalMilestoneTimeline = () => {
 
   return (
     <div className="min-h-screen bg-[#090e17] text-gray-300 font-sans">
-      <Module3Header />
-      
-      <div className="flex pt-24">
+      <div className="flex">
         <Sidebar />
 
         <main className="flex-1 ml-72">
