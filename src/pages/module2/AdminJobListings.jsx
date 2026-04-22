@@ -15,7 +15,7 @@ import {
   AlertTriangle,
   Loader2
 } from 'lucide-react';
-import { DatePicker } from '../module3/DateTimePicker';
+import { DatePicker } from "../../components/DateTimePicker";
 
 const AdminJobListings = () => {
   const [jobs, setJobs] = useState([]);
@@ -159,17 +159,17 @@ const AdminJobListings = () => {
         body: JSON.stringify(payload)
       });
 
-      if (response.ok) {
-        setIsModalOpen(false);
+      if (response.ok) { 
+        setIsModalOpen(false); 
         fetchJobs(); 
       } else {
         const errData = await response.json();
         alert(`Failed to save: ${errData.message || 'Error'}`);
       }
-    } catch (err) {
+    } catch (err) { 
       alert("Server error.");
-    } finally {
-      setIsSubmitting(false);
+    } finally { 
+      setIsSubmitting(false); 
     }
   };
 
@@ -181,7 +181,7 @@ const AdminJobListings = () => {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (response.ok) fetchJobs();
-    } catch (err) {
+    } catch (err) { 
       alert("Server error.");
     }
   };
@@ -206,8 +206,8 @@ const AdminJobListings = () => {
             <p className="text-gray-500 mt-1">Add or update opportunities for students.</p>
           </div>
           <button onClick={openAddModal} className="bg-[#00d09c] hover:bg-[#00e6ae] text-gray-900 px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2">
-            <Plus size={20} /> Post New Job
-          </button>
+              <Plus size={20} /> Post New Job
+            </button>
         </header>
 
         {/* --- SEARCH INPUT --- */}
@@ -242,7 +242,7 @@ const AdminJobListings = () => {
                           <Briefcase className="text-[#00d09c]" size={24} />
                         </div>
                         <h3 className="text-lg font-bold text-white mb-1 line-clamp-1">{job.title}</h3>
-                        <p className="text-[#00d09c] text-sm font-bold mb-4">{job.company}</p>
+                <p className="text-[#00d09c] text-sm font-bold mb-4">{job.company}</p>
                         <div className="space-y-2 mb-6">
                           <div className="flex items-center gap-2 text-xs text-gray-500">
                             <MapPin size={14} /> {job.location || 'Not Specified'} {job.remote ? '(Remote)' : ''}
@@ -251,8 +251,8 @@ const AdminJobListings = () => {
                             <Clock size={14} /> {job.type}
                           </div>
                         </div>
-                      </div>
-                      <div className="flex gap-3 pt-4 border-t border-gray-800">
+                </div>
+                <div className="flex gap-3 pt-4 border-t border-gray-800">
                         <button onClick={() => openEditModal(job)} disabled={!job.active} className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm bg-[#00d09c]/10 text-[#00d09c] hover:bg-[#00d09c]/20 border border-[#00d09c]/20 transition-all disabled:opacity-30"><Edit2 size={16} /> Edit</button>
                         <button onClick={() => handleDelete(job.id)} disabled={!job.active} className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-sm bg-red-500/10 text-red-500 hover:bg-red-500/20 border border-red-500/20 transition-all disabled:opacity-30"><Trash2 size={16} /> {job.active ? 'Close' : 'Closed'}</button>
                       </div>
