@@ -15,6 +15,7 @@ import {
   AlertTriangle,
   Loader2
 } from 'lucide-react';
+import { DatePicker } from '../module3/DateTimePicker';
 
 const AdminJobListings = () => {
   const [jobs, setJobs] = useState([]);
@@ -115,6 +116,13 @@ const AdminJobListings = () => {
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : processedValue
+    }));
+  };
+
+  const handleDateChange = (value) => {
+    setFormData(prev => ({
+      ...prev,
+      deadline: value
     }));
   };
 
@@ -311,10 +319,12 @@ const AdminJobListings = () => {
 
                   {/* Deadline & Skills */}
                   <div className="grid grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Application Deadline</label>
-                      <input type="date" name="deadline" value={formData.deadline} min={minDate} onChange={handleInputChange} className="w-full bg-[#090e17] border border-gray-800 rounded-xl px-4 py-3 text-white focus:border-[#00d09c] outline-none" />
-                    </div>
+                    <DatePicker
+                      value={formData.deadline}
+                      onChange={handleDateChange}
+                      label="Application Deadline"
+                      minDate={new Date().toISOString().split('T')[0]}
+                    />
                     <div>
                       <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Required Skills (Comma Sep.)</label>
                       <input type="text" name="requiredSkills" value={formData.requiredSkills} onChange={handleInputChange} className="w-full bg-[#090e17] border border-gray-800 rounded-xl px-4 py-3 text-white focus:border-[#00d09c] outline-none" placeholder="Java, React, SQL" />
