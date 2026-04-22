@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Landing from './pages/module4/Landing';
 import Login from './pages/module2/Login';
-import AdminJobListings from './pages/module2/AdminJobListings'; 
-import AtsChecker from './pages/module2/AtsChecker'; 
-import StudentDashboard from './pages/module2/StudentDashboard';
+import AdminJobListings from './pages/module2/AdminJobListings';
+import AtsChecker from './pages/module2/AtsChecker';
+import StudentDashboard from './pages/module1/StudentDashboard'; 
 import StudentJobListings from './pages/module2/StudentJobListings';
 import { EventList, CreateEvent, MyEvents, MeetingList, CreateMeeting, MeetingDetails, ProjectList, KanbanBoard, MilestoneList, MilestoneTimeline, GlobalMilestoneTimeline, Module3Dashboard, Module3DashboardLogin } from './pages/module3';
 
@@ -10,8 +11,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/admin-dashboard" element={<AdminJobListings />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
+
+        {/* Module 2 */}
+        <Route path="/admin-job-dashboard" element={<AdminJobListings />} />
         <Route path="/student-dashboard" element={<StudentDashboard />} />
         <Route path="/student-job-listings" element={<StudentJobListings />} />
         <Route path="/ats-checker" element={<AtsChecker />} />
