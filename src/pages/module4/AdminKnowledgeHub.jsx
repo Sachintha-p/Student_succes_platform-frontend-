@@ -447,6 +447,7 @@ const AdminKnowledgeHub = () => {
                 <button onClick={confirmDelete} className="py-5 bg-red-600 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-slate-900 transition-all shadow-xl shadow-red-600/10 active:scale-95">Purge</button>
               </div>
             </div>
+            
           </div>
         )}
 

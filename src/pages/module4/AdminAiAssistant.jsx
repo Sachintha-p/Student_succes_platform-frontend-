@@ -111,6 +111,7 @@ const AdminAiAssistant = () => {
                         <div className="flex items-center gap-3 text-[10px] font-black text-indigo-600 bg-white px-5 py-2.5 rounded-2xl w-fit border border-slate-100 shadow-sm">
                             <Activity size={14} /> Total Intelligence Queries
                         </div>
+                        
                     </div>
 
                     <div className="bg-[#f8fafc] border border-slate-200/60 p-12 rounded-[3rem] relative overflow-hidden group hover:border-blue-400/50 transition-all text-left shadow-sm">

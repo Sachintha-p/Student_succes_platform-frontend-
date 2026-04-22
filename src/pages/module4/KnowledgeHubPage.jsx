@@ -345,6 +345,7 @@ const BookOpen = ({ size, className }) => (
     fill="none" 
     stroke="currentColor" 
     strokeWidth="2" 
+    
     strokeLinecap="round" 
     strokeLinejoin="round" 
     className={className}
