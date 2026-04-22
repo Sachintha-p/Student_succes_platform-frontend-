@@ -13,6 +13,19 @@ const KnowledgeHubPage = () => {
   const [aiOverview, setAiOverview] = useState(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [showBookmarksOnly, setShowBookmarksOnly] = useState(false);
+
+  const getResourceImage = (type, id) => {
+    const patterns = {
+      'VIDEO': 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=2070&auto=format&fit=crop',
+      'ARTICLE': 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2070&auto=format&fit=crop',
+      'PDF': 'https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?q=80&w=2073&auto=format&fit=crop',
+      'COURSE': 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop',
+      'DOCUMENT': 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070&auto=format&fit=crop'
+    };
+    const seed = typeof id === 'number' ? id % 3 : 0;
+    const variants = ['', '&sig=1', '&sig=2'];
+    return (patterns[type] || patterns['DOCUMENT']) + variants[seed];
+  };
   
   const userId = 12; // Simulation
   const token = localStorage.getItem('accessToken') || 'mock-token-for-testing';
@@ -128,105 +141,119 @@ const KnowledgeHubPage = () => {
   };
 
   return (
-    <div className="flex h-screen bg-[#0b0f1a] text-white overflow-hidden font-sans">
+    <div className="flex min-h-screen bg-slate-50 text-slate-600 overflow-hidden font-sans">
       <Sidebar />
       
       <div className="flex-1 flex flex-col ml-72 relative">
-        <header className="p-8 border-b border-gray-800/20 bg-[#0b0f1a]/80 backdrop-blur-md sticky top-0 z-10">
-          <div className="flex justify-between items-end">
+        <header className="p-10 border-b border-slate-200/50 bg-white/80 backdrop-blur-md sticky top-0 z-20 shadow-sm">
+          <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-black bg-gradient-to-r from-white via-white to-[#00d09c] bg-clip-text text-transparent italic tracking-tighter uppercase">Knowledge Hub</h1>
-              <p className="text-xs text-gray-500 mt-2 font-bold tracking-widest uppercase opacity-70">Curated Library of Study Materials & Resources</p>
+              <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">Knowledge Hub</h1>
+              <p className="text-sm text-slate-400 mt-2 font-bold tracking-widest uppercase">Curated Academic Library & Resources</p>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-[#00d09c]/10 text-[#00d09c] text-[10px] font-black rounded-full border border-[#00d09c]/20 shadow-[0_0_15px_rgba(0,208,156,0.1)] uppercase">
-               <BookMarked size={14} />
-               Explore & Bookmark
+            <div className="hidden lg:flex items-center gap-8">
+              <div className="flex flex-col items-end">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Library Assets</span>
+                <span className="text-2xl font-black text-indigo-600">{resources.length}</span>
+              </div>
+              <div className="h-10 w-px bg-slate-200"></div>
+              <div className="flex flex-col items-end">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Curated List</span>
+                <div className="flex items-center gap-2 px-4 py-1.5 bg-indigo-50 text-indigo-600 text-[9px] font-black rounded-xl border border-indigo-100 shadow-sm uppercase tracking-widest">
+                  <BookMarked size={12} strokeWidth={3} />
+                  Premium Access
+                </div>
+              </div>
             </div>
           </div>
         </header>
 
         <main className="flex-1 overflow-y-auto p-10 zero-scrollbar">
           {/* Controls Bar */}
-          <div className="flex flex-col md:flex-row gap-4 mb-10 bg-[#161b2c] p-6 rounded-3xl border border-gray-800 shadow-2xl">
-            <div className="flex-1 flex gap-3">
-              <div className="relative flex-1 group">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-[#00d09c] transition-colors" size={18} />
-                <input 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search resources or ask AI a topic..."
-                  className="w-full bg-[#0b0f1a] border border-gray-800 py-4 pl-12 pr-4 rounded-2xl focus:outline-none focus:border-[#00d09c]/50 transition-all text-sm font-bold placeholder:text-gray-700"
-                />
-              </div>
-              <button 
-                onClick={handleGetAiOverview}
-                disabled={!searchQuery.trim() || aiLoading}
-                className="bg-[#00d09c]/10 text-[#00d09c] border border-[#00d09c]/30 hover:bg-[#00d09c] hover:text-black px-6 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all disabled:opacity-50 disabled:hover:bg-[#00d09c]/10 disabled:hover:text-[#00d09c] flex items-center gap-2 whitespace-nowrap"
-              >
-                {aiLoading ? <Loader2 className="animate-spin" size={16} /> : <Sparkles size={16} />}
-                Ask AI
-              </button>
-            </div>
-            
-            <div className="flex gap-4">
-              <div className="relative">
-                <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={14} />
-                <select 
-                  value={subjectFilter}
-                  onChange={(e) => setSubjectFilter(e.target.value)}
-                  className="bg-[#0b0f1a] border border-gray-800 py-4 pl-10 pr-10 rounded-2xl focus:outline-none focus:border-[#00d09c]/50 transition-all text-[11px] font-black uppercase appearance-none cursor-pointer"
+          <div className="mb-12 space-y-6">
+            <div className="flex flex-col xl:flex-row gap-4 bg-white p-6 rounded-[2.5rem] border border-slate-200/50 shadow-2xl shadow-slate-200/40">
+              <div className="flex-1 flex gap-3">
+                <div className="relative flex-1 group">
+                  <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" size={20} />
+                  <input 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search for subjects, topics, or materials..."
+                    className="w-full bg-slate-50 border border-slate-100 py-5 pl-14 pr-6 rounded-[1.5rem] focus:outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-50 transition-all text-base font-bold placeholder:text-slate-300 text-slate-700"
+                  />
+                </div>
+                <button 
+                  onClick={handleGetAiOverview}
+                  disabled={!searchQuery.trim() || aiLoading}
+                  className="bg-indigo-600 hover:bg-slate-900 text-white px-8 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all disabled:opacity-50 flex items-center gap-3 whitespace-nowrap shadow-xl shadow-indigo-200 group active:scale-95"
                 >
-                  <option value="">All Subjects</option>
-                  <option value="Programming">Programming</option>
-                  <option value="Computer Science">Computer Science</option>
-                  <option value="Mathematics">Mathematics</option>
-                  <option value="Database Systems">Database Systems</option>
-                </select>
+                  {aiLoading ? <Loader2 className="animate-spin" size={18} /> : <Sparkles size={18} className="group-hover:rotate-12 transition-transform" />}
+                  Ask Intelligence
+                </button>
               </div>
-
-               <button 
-                onClick={fetchResources}
-                className="bg-[#00d09c] text-black px-8 py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-[0_5px_15px_rgba(0,208,156,0.2)]"
-              >
-                Apply Filters
-              </button>
-
+              
               <button 
                 onClick={() => setShowBookmarksOnly(!showBookmarksOnly)}
-                className={`px-8 py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all ${showBookmarksOnly ? 'bg-yellow-400 text-black shadow-[0_5px_15px_rgba(250,204,21,0.2)]' : 'bg-[#161b2c] text-white border border-gray-800 hover:border-yellow-400/50'}`}
+                className={`px-8 py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-widest transition-all active:scale-95 flex items-center gap-3 ${showBookmarksOnly ? 'bg-amber-500 text-white shadow-xl shadow-amber-200' : 'bg-slate-900 text-white hover:bg-indigo-600 shadow-xl shadow-slate-200'}`}
               >
-                {showBookmarksOnly ? 'View All Resources' : 'My Bookmarks'}
+                <BookmarkIcon size={18} fill={showBookmarksOnly ? "white" : "none"} />
+                {showBookmarksOnly ? 'View All Hub' : 'My Bookmarks'}
               </button>
+            </div>
+
+            {/* Pill Style Filters (Wrapping) */}
+            <div className="flex flex-wrap gap-2 px-2">
+              <div className="flex items-center px-4 py-2 bg-slate-100 rounded-full text-[10px] font-black text-slate-400 uppercase tracking-[0.1em] mr-2">
+                <Filter size={12} className="mr-2" /> Filter By
+              </div>
+              {['', 'Programming', 'Computer Science', 'Mathematics', 'Database Systems', 'Software Engineering'].map(subj => (
+                <button
+                  key={subj}
+                  onClick={() => setSubjectFilter(subj)}
+                  className={`px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all border ${subjectFilter === subj ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-white border-slate-200 text-slate-500 hover:border-indigo-400 hover:text-indigo-600'}`}
+                >
+                  {subj || 'All Subjects'}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* AI Overview Box */}
+          {/* AI Overview Box (Glassmorphic Redesign) */}
           {aiOverview && (
-            <div className="mb-10 bg-gradient-to-br from-[#00d09c]/10 to-[#161b2c] border border-[#00d09c]/30 p-8 rounded-[2.5rem] shadow-[0_10px_40px_rgba(0,208,156,0.1)] relative overflow-hidden animate-in fade-in slide-in-from-top-4 duration-500">
-               <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#00d09c]/20 blur-3xl rounded-full"></div>
-               <div className="flex items-center gap-3 mb-6 relative z-10">
-                  <div className="w-10 h-10 bg-[#00d09c] rounded-full flex items-center justify-center text-black shadow-lg">
-                     <Sparkles size={18} />
+            <div className="mb-12 bg-white/60 backdrop-blur-2xl border border-indigo-100 p-12 rounded-[3.5rem] shadow-2xl relative overflow-hidden animate-in fade-in slide-in-from-top-6 duration-700 group">
+               {/* Ambient Mesh Background */}
+               <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-200/30 rounded-full blur-[120px] -mr-48 -mt-48 transition-all duration-1000 group-hover:scale-110"></div>
+               <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-sky-200/20 rounded-full blur-[100px] -ml-32 -mb-32"></div>
+
+               <div className="flex items-center gap-5 mb-10 relative z-10">
+                  <div className="w-16 h-16 bg-indigo-600 rounded-[1.5rem] flex items-center justify-center text-white shadow-2xl shadow-indigo-200 animate-pulse">
+                     <Sparkles size={28} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-black text-white italic">AI Overview</h3>
-                    <p className="text-[10px] text-[#00d09c] font-bold uppercase tracking-widest mt-0.5">Deep Dive on: '{searchQuery}'</p>
+                    <h3 className="text-3xl font-black text-slate-900 tracking-tight">AI Subject Brief</h3>
+                    <p className="text-xs text-indigo-600 font-bold uppercase tracking-[0.2em] mt-1.5 flex items-center gap-2">
+                       <span className="w-2 h-2 bg-indigo-500 rounded-full animate-ping" />
+                       Strategic Intelligence for: '{searchQuery}'
+                    </p>
                   </div>
                </div>
-               <div className="text-sm text-gray-300 leading-relaxed prose prose-invert max-w-none relative z-10 font-medium">
+               <div className="text-lg text-slate-700 leading-relaxed max-w-none relative z-10 font-medium bg-white/40 p-8 rounded-[2rem] border border-white/50 shadow-inner italic">
                   <ReactMarkdown>{aiOverview}</ReactMarkdown>
                </div>
-               <button onClick={() => setAiOverview(null)} className="absolute top-6 right-6 text-gray-500 hover:text-white bg-black/20 p-2 rounded-xl transition-all z-10">
-                 <X size={16} />
+               <button onClick={() => setAiOverview(null)} className="absolute top-10 right-10 text-slate-400 hover:text-slate-900 transition-all hover:bg-white p-3 rounded-full z-10 shadow-sm">
+                 <X size={24} />
                </button>
             </div>
           )}
 
           {/* Grid Area */}
           {loading ? (
-             <div className="h-96 flex flex-col items-center justify-center gap-4 text-gray-500">
-               <Loader2 className="animate-spin text-[#00d09c]" size={40} />
-               <p className="text-sm font-bold tracking-widest uppercase">Fetching resources...</p>
+             <div className="h-96 flex flex-col items-center justify-center gap-6">
+                <div className="relative">
+                  <div className="w-16 h-16 border-4 border-indigo-100 rounded-full"></div>
+                  <div className="w-16 h-16 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin absolute top-0 left-0"></div>
+                </div>
+               <p className="text-[10px] font-black tracking-[0.2em] uppercase text-slate-400">Synchronizing Knowledge Base</p>
              </div>
           ) : displayResources.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8">
@@ -237,40 +264,55 @@ const KnowledgeHubPage = () => {
                 const activeResourceId = bookmarkedItem ? bookmarkedItem.id : res.id;
                 
                 return (
-                  <div key={res.id} className="group bg-[#161b2c] border border-gray-800 rounded-[2.5rem] overflow-hidden flex flex-col hover:border-[#00d09c]/30 hover:bg-[#1a2135] transition-all duration-500 relative shadow-lg">
-                    <div className="h-40 bg-gradient-to-br from-[#00d09c]/5 to-transparent relative overflow-hidden flex items-center justify-center">
-                       <div className="absolute top-4 left-4">
-                          <span className="text-[10px] font-black text-[#00d09c] bg-[#00d09c]/10 px-3 py-1 rounded-lg border border-[#00d09c]/20 uppercase">{res.type || 'DOCUMENT'}</span>
+                  <div key={res.id} className="group bg-white border border-slate-200/60 rounded-[2.5rem] overflow-hidden flex flex-col hover:border-indigo-400/40 hover:shadow-[0_20px_60px_-15px_rgba(79,70,229,0.12)] transition-all duration-500 relative animate-in fade-in slide-in-from-bottom-4">
+                    {/* Image Header with Geometric Pattern */}
+                    <div className="h-52 relative overflow-hidden">
+                       <img 
+                        src={getResourceImage(res.type, res.id)} 
+                        alt={res.title} 
+                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                       />
+                       <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+                       
+                       <div className="absolute top-5 left-5">
+                          <span className="text-[10px] font-black text-white bg-indigo-600/80 backdrop-blur-md px-4 py-2 rounded-xl border border-white/20 uppercase tracking-[0.1em]">{res.type || 'DOCUMENT'}</span>
                        </div>
-                       <div className="absolute top-4 right-4 z-20">
+                       <div className="absolute top-5 right-5 z-20">
                             <button 
                               onClick={() => toggleBookmark(activeResourceId, isBookmarked, res)}
-                              className={`p-2.5 rounded-xl transition-all duration-300 ${isBookmarked ? 'bg-yellow-400 text-black shadow-[0_0_20px_rgba(250,204,21,0.4)] scale-110 border border-yellow-300' : 'bg-black/40 text-gray-500 border border-transparent hover:text-white hover:bg-black/60'}`}
+                              className={`p-3 rounded-2xl transition-all duration-300 backdrop-blur-xl ${isBookmarked ? 'bg-amber-400 text-white shadow-xl scale-110 rotate-12' : 'bg-white/10 text-white border border-white/20 hover:bg-white/20 hover:scale-110'}`}
                             >
-                               <BookmarkIcon size={16} fill={isBookmarked ? "currentColor" : "none"} strokeWidth={isBookmarked ? 1 : 2} />
+                               <BookmarkIcon size={18} fill={isBookmarked ? "white" : "none"} strokeWidth={isBookmarked ? 1.5 : 2.5} />
                             </button>
                        </div>
-                       <BookOpen size={48} className="text-gray-800 group-hover:text-[#00d09c]/20 group-hover:scale-110 transition-all duration-700" />
+
+                       <div className="absolute bottom-5 left-5 right-5">
+                          <div className="flex items-center gap-2">
+                             <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center text-white border border-white/20">
+                                <Search size={14} />
+                             </div>
+                             <span className="text-[10px] font-bold text-white/90 uppercase tracking-widest truncate">{res.subject || 'GENERAL RESEARCH'}</span>
+                          </div>
+                       </div>
                     </div>
 
-                    <div className="p-8 flex flex-col flex-1">
-                      <p className="text-[10px] font-black text-gray-600 uppercase tracking-[0.2em] mb-2">{res.subject || 'GENERAL ACADEMIC'}</p>
-                      <h3 className="text-lg font-bold text-white mb-3 leading-tight group-hover:text-[#00d09c] transition-colors">{res.title}</h3>
-                      <p className="text-xs text-gray-500 line-clamp-3 leading-relaxed mb-8 flex-1">{res.description}</p>
+                    <div className="p-8 flex flex-col flex-1 bg-white">
+                      <h3 className="text-xl font-extrabold text-slate-900 mb-4 leading-snug group-hover:text-indigo-600 transition-colors line-clamp-2">{res.title}</h3>
+                      <p className="text-sm text-slate-500 line-clamp-3 leading-relaxed mb-10 flex-1 font-medium">{res.description}</p>
                       
-                      <div className="pt-6 border-t border-gray-800/30 flex justify-between items-center">
-                        <div className="flex gap-1">
-                          {res.tags?.slice(0, 2).map((tag, idx) => (
-                             <span key={idx} className="text-[9px] font-black text-gray-700 uppercase bg-black/10 px-2 py-0.5 rounded italic">#{tag}</span>
+                      <div className="pt-6 border-t border-slate-50 flex justify-between items-center mt-auto">
+                        <div className="flex gap-2">
+                          {(res.tags || []).slice(0, 2).map((tag, idx) => (
+                             <span key={idx} className="text-[9px] font-black text-indigo-500 uppercase bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-100 tracking-tighter">#{tag}</span>
                           ))}
                         </div>
                         <a 
                           href={res.url} 
                           target="_blank" 
                           rel="noreferrer"
-                          className="w-10 h-10 bg-[#00d09c]/5 rounded-xl flex items-center justify-center text-[#00d09c] hover:bg-[#00d09c] hover:text-black transition-all shadow-inner"
+                          className="flex items-center gap-3 px-6 py-3 bg-slate-50 hover:bg-indigo-600 text-[11px] font-black text-slate-900 hover:text-white transition-all rounded-xl shadow-sm hover:shadow-indigo-200 active:scale-95 group/link"
                         >
-                          <ExternalLink size={16} />
+                          ACCESS <ExternalLink size={14} className="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
                         </a>
                       </div>
                     </div>
@@ -279,10 +321,12 @@ const KnowledgeHubPage = () => {
               })}
             </div>
           ) : (
-            <div className="h-96 flex flex-col items-center justify-center text-center opacity-40">
-               <AlertCircle size={60} className="mb-6 text-gray-700" />
-               <h3 className="text-2xl font-light">No resources found</h3>
-               <p className="text-sm mt-2">Try adjusting your filters or search keywords.</p>
+            <div className="h-96 flex flex-col items-center justify-center text-center">
+               <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6 text-slate-200">
+                  <AlertCircle size={40} />
+               </div>
+               <h3 className="text-2xl font-extrabold text-slate-900">No matching assets</h3>
+               <p className="text-sm mt-2 text-slate-400 font-medium">Try broadening your search or clearing filters.</p>
             </div>
           )}
         </main>
@@ -305,7 +349,7 @@ const BookOpen = ({ size, className }) => (
     strokeLinejoin="round" 
     className={className}
   >
-    <path d="M2 targetContent-3 0 0 1 3-3h7a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a2 2 0 0 1-2-2V4z" />
+    <path d="M2 3 0 0 1 3-3h7a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a2 2 0 0 1-2-2V4z" />
     <path d="M22 4a2 2 0 0 0-2-2h-7a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h7a2 2 0 0 0 2-2V4z" />
   </svg>
 );
