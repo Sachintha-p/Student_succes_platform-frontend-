@@ -16,7 +16,15 @@ import {
   User,
   CheckCircle2,
   AlertCircle,
-  Clock
+  Clock,
+  Rocket,
+  BarChart2,
+  Target,
+  Zap,
+  Bot,
+  BrainCircuit,
+  Layers,
+  ShieldCheck
 } from 'lucide-react';
 
 const formatRelativeTime = (dateString) => {
@@ -222,43 +230,58 @@ const AiChatPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#090e17] text-gray-300 font-sans">
+    <div className="flex h-screen bg-slate-50 text-slate-900 font-sans relative overflow-hidden">
       <Sidebar />
 
-      <main className="flex-1 ml-72 flex overflow-hidden">
-        {/* Left Sidebar: Conversations */}
-        <div className="w-80 border-r border-gray-800/50 flex flex-col bg-[#0b0f1a]">
-          <div className="p-6 border-b border-gray-800/20">
+      <div className="flex-1 ml-72 flex flex-col h-screen overflow-hidden relative z-10 bg-white">
+        {/* Hierarchical Header (Knowledge Hub Style) */}
+        <header className="p-10 border-b border-slate-200 bg-white sticky top-0 z-30">
+          <div className="flex justify-between items-end">
+            <div>
+              <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">AI Strategic Advisor</h1>
+              <p className="text-sm text-slate-400 mt-2 font-bold tracking-widest uppercase">Individual Research Module — Advanced Strategic Intelligence</p>
+            </div>
+            <div className="hidden md:flex items-center gap-3 px-5 py-2.5 bg-indigo-50 text-indigo-600 text-[10px] font-black rounded-2xl border border-indigo-100 shadow-sm uppercase tracking-widest">
+               <BrainCircuit size={14} strokeWidth={3} />
+               Executive Support Active
+            </div>
+          </div>
+        </header>
+
+        <div className="flex-1 flex overflow-hidden">
+          {/* Step 1: Research History Sidebar */}
+          <div className="w-72 border-r border-slate-200 flex flex-col bg-slate-50/30">
+            <div className="p-5 border-b border-slate-200 bg-white/50">
             <button 
               onClick={startNewChat}
-              className="w-full bg-[#00d09c]/10 text-[#00d09c] border border-[#00d09c]/20 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-[#00d09c]/20 transition-all shadow-[0_0_20px_rgba(0,208,156,0.05)]"
+              className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 active:scale-[0.98]"
             >
-              <Plus size={20} /> New Academic Query
+              <Plus size={20} /> New Study Session
             </button>
           </div>
           
           <div className="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-2">
-            <div className="flex items-center gap-2 px-3 mb-4 opacity-50">
-               <History size={14} />
-               <span className="text-[10px] font-black uppercase tracking-widest text-[#00d09c]">Memory Vault</span>
+            <div className="flex items-center gap-2 px-3 mb-4">
+               <History size={14} className="text-slate-400" />
+               <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">History</span>
             </div>
             {conversations.map(conv => (
               <div 
                 key={conv.id} 
                 onClick={() => loadConversation(conv.id)}
-                className={`group p-4 rounded-2xl cursor-pointer transition-all border ${activeConvId === conv.id ? 'bg-[#161b2c] border-[#00d09c]/30 shadow-[0_4px_15px_rgba(0,208,156,0.1)]' : 'bg-transparent border-transparent hover:bg-white/5 hover:border-white/10'}`}
+                className={`group p-4 rounded-2xl cursor-pointer transition-all border ${activeConvId === conv.id ? 'bg-indigo-50/80 border-indigo-200 shadow-sm' : 'bg-transparent border-transparent hover:bg-slate-50/80 hover:border-slate-100'}`}
               >
                 <div className="flex justify-between items-start gap-3">
                   <div className="flex-1 overflow-hidden">
                     <div className="flex items-center gap-2 mb-1">
-                      <div className={`p-1.5 rounded-lg ${activeConvId === conv.id ? 'bg-[#00d09c]/20 text-[#00d09c]' : 'bg-gray-800 text-gray-400 group-hover:text-white transition-colors'}`}>
+                      <div className={`p-1.5 rounded-lg ${activeConvId === conv.id ? 'bg-indigo-600 text-white' : 'bg-slate-100 text-slate-500 group-hover:text-indigo-600 transition-colors'}`}>
                         <MessageSquare size={12} />
                       </div>
-                      <span className={`text-xs font-bold truncate ${activeConvId === conv.id ? 'text-white' : 'text-gray-400 group-hover:text-gray-300'}`}>
-                        {conv.title || `Study Session #${conv.id}`}
+                      <span className={`text-xs font-bold truncate ${activeConvId === conv.id ? 'text-indigo-900' : 'text-slate-600 group-hover:text-slate-900'}`}>
+                        {conv.title || `Session #${conv.id}`}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2 text-[10px] text-gray-600 font-bold uppercase tracking-tighter">
+                    <div className="flex items-center gap-2 text-[10px] text-slate-400 font-bold uppercase tracking-tight">
                       <Clock size={10} />
                       <span>{formatRelativeTime(conv.createdAt)}</span>
                     </div>
@@ -266,13 +289,13 @@ const AiChatPage = () => {
                   <div className="flex items-center">
                     {confirmingDeleteId === conv.id ? (
                       <div className="flex gap-1 animate-in slide-in-from-right duration-200">
-                        <button onClick={(e) => confirmDeleteConversation(e, conv.id)} className="p-1.5 bg-red-500/10 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-all"><CheckCircle2 size={14} /></button>
-                        <button onClick={cancelDelete} className="p-1.5 bg-gray-800 text-gray-400 rounded-lg"><Plus className="rotate-45" size={14} /></button>
+                        <button onClick={(e) => confirmDeleteConversation(e, conv.id)} className="p-1.5 bg-red-100 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all"><CheckCircle2 size={14} /></button>
+                        <button onClick={cancelDelete} className="p-1.5 bg-slate-100 text-slate-500 rounded-lg"><Plus className="rotate-45" size={14} /></button>
                       </div>
                     ) : (
                       <button 
                         onClick={(e) => requestDeleteConversation(e, conv.id)}
-                        className="p-2 opacity-0 group-hover:opacity-100 hover:bg-red-500/10 text-gray-600 hover:text-red-500 rounded-xl transition-all"
+                        className="p-2 opacity-0 group-hover:opacity-100 hover:bg-red-50 text-red-500 hover:text-white rounded-xl transition-all"
                       >
                         <Trash2 size={14} />
                       </button>
@@ -284,66 +307,89 @@ const AiChatPage = () => {
           </div>
         </div>
 
-        {/* Middle: Chat Area */}
-        <div className="flex-1 flex flex-col h-screen relative bg-[#090e17]">
-          {/* Header */}
-          <div className="h-20 border-b border-gray-800/20 px-10 flex items-center justify-between bg-black/10 backdrop-blur-md sticky top-0 z-10">
-            <div className="flex items-center gap-4 text-left">
-              <div className="w-10 h-10 bg-[#00d09c]/10 rounded-xl flex items-center justify-center border border-[#00d09c]/20">
-                <Sparkles size={20} className="text-[#00d09c]" />
-              </div>
-              <div>
-                <h2 className="text-sm font-black text-white uppercase tracking-widest italic">AI Academic Assistant</h2>
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-[#00d09c] rounded-full animate-pulse"></span>
-                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-tighter">Powered by GPT-4 Intelligence</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div className="flex-1 flex flex-col h-full relative bg-white overflow-hidden">
+            {/* Professional Academic Header Removal (Redundant) */}
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-10 space-y-8 custom-scrollbar pb-32">
+          {/* Messages container - scrollable independently */}
+          <div className="flex-1 overflow-y-auto p-12 pb-[350px] space-y-10 custom-scrollbar bg-slate-50/20">
             {messages.length === 0 ? (
-              <div className="h-full flex flex-col items-center justify-center text-center opacity-40">
-                <div className="w-20 h-20 bg-gray-800/20 rounded-[2.5rem] flex items-center justify-center mb-6 border border-gray-800/30">
-                  <MessageSquare size={40} className="text-gray-700" />
+              <div className="flex flex-col items-center text-center max-w-4xl mx-auto px-6 py-24 animate-in fade-in zoom-in-95 duration-700">
+                <div className="w-16 h-16 bg-white text-indigo-600 rounded-2xl flex items-center justify-center mb-8 border border-slate-200 shadow-sm">
+                  <Sparkles size={28} />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2 italic">How can I assist your studies today?</h3>
-                <p className="text-xs max-w-xs text-gray-500 font-medium">Ask for explanations, research papers, tutorials or resource recommendations.</p>
+                <h3 className="text-3xl font-black text-slate-900 mb-3 tracking-tight">AI Strategic Research Advisor</h3>
+                <p className="text-base text-slate-500 font-medium leading-relaxed mb-12 max-w-xl">
+                  Advanced Intelligence Module — Professional Academic & Research Strategy
+                </p>
+                
+                {/* Minimalist Icon-Only Suggestion Chips */}
+                <div className="flex items-center justify-center gap-4">
+                  {[
+                    { icon: Rocket, label: "Research Roadmap", title: "Deep Research Strategy" },
+                    { icon: BarChart2, label: "GPA Analysis", title: "Academic Performance" },
+                    { icon: Target, label: "Career Path", title: "Career Deployment" },
+                    { icon: BookOpen, label: "Literature Review", title: "Expert Literature Search" }
+                  ].map((chip, i) => (
+                    <button 
+                      key={i} 
+                      onClick={() => setInput(chip.title)}
+                      title={chip.label}
+                      className="w-14 h-14 bg-white border border-slate-200 rounded-xl flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:border-indigo-400 hover:shadow-lg hover:shadow-indigo-500/5 transition-all duration-300"
+                    >
+                      <chip.icon size={22} />
+                    </button>
+                  ))}
+                </div>
               </div>
             ) : (
               messages.map((msg, idx) => (
-                <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] ${msg.role === 'user' ? 'bg-[#161b2c] border border-gray-800/50 rounded-l-[1.5rem] rounded-tr-[1.5rem]' : 'bg-[#0b0f1a] border border-gray-800/50 rounded-r-[1.5rem] rounded-tl-[1.5rem]'} p-6 shadow-2xl relative group`}>
-                    <div className="flex items-center gap-3 mb-3 border-b border-gray-800/30 pb-2">
+                <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-6 duration-500`}>
+                  <div className={`max-w-[85%] ${msg.role === 'user' ? 'bg-indigo-600 text-white rounded-2xl rounded-tr-sm shadow-md' : 'bg-white border border-slate-200 rounded-2xl rounded-tl-sm shadow-sm'} p-6 relative group`}>
+                    <div className={`flex items-center gap-2 mb-3 pb-3 border-b ${msg.role === 'user' ? 'border-indigo-400/30' : 'border-slate-100'}`}>
                       {msg.role === 'user' ? (
                         <div className="flex items-center gap-2 ml-auto">
-                          <span className="text-[10px] font-black text-[#00d09c] uppercase tracking-widest">Student Explorer</span>
-                          <User size={14} className="text-[#00d09c]" />
+                          <span className="text-[9px] font-bold uppercase tracking-widest text-indigo-100">Researcher</span>
+                          <User size={12} className="text-white opacity-80" />
                         </div>
                       ) : (
                         <div className="flex items-center gap-2">
-                          <Sparkles size={14} className="text-[#00d09c]" />
-                          <span className="text-[10px] font-black text-[#00d09c] uppercase tracking-widest italic">Academic Intelligence</span>
+                          <Bot size={12} className="text-indigo-600" />
+                          <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Advisor Insight</span>
                         </div>
                       )}
                     </div>
-                    <div className="text-sm leading-relaxed text-gray-300 text-left whitespace-pre-wrap font-medium">
+                    <div className={`text-base leading-relaxed ${msg.role === 'user' ? 'text-white' : 'text-slate-800'}`}>
                       {msg.content}
                     </div>
+                    
+                    {/* Inline Strategic Data Sources */}
                     {msg.resources && msg.resources.length > 0 && (
-                      <div className="mt-4 pt-4 border-t border-gray-700/50 flex justify-end">
-                        <button
-                          onClick={() => {
-                            setModalResources(msg.resources);
-                            setShowResourcesModal(true);
-                          }}
-                          className="flex items-center gap-2 text-[11px] font-bold text-black bg-[#00d09c] hover:bg-white px-4 py-2 rounded-xl transition-all shadow-[0_4px_15px_rgba(0,208,156,0.2)] group"
-                        >
-                          <BookOpen size={14} className="group-hover:scale-110 transition-transform" />
-                          View {msg.resources.length} Related Resources
-                        </button>
+                      <div className="mt-8 pt-8 border-t border-slate-100">
+                        <div className="flex items-center gap-2 mb-6">
+                           <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full" />
+                           <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Integrated Research Matrix</span>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {msg.resources.map((res, ridx) => (
+                            <div key={ridx} className={`group p-4 rounded-xl border transition-all duration-300 ${msg.role === 'user' ? 'bg-white/10 border-white/20' : 'bg-slate-50 border-slate-200 hover:border-indigo-300 hover:bg-indigo-50/30'}`}>
+                              <div className="flex justify-between items-start mb-3">
+                                <div className={`p-1.5 rounded-lg ${msg.role === 'user' ? 'bg-white/20' : 'bg-white border border-slate-100 shadow-sm'}`}>
+                                  {res.type === 'VIDEO' ? <BookOpen size={14} className="text-indigo-600" /> : <Layers size={14} className="text-indigo-600" />}
+                                </div>
+                                <a 
+                                  href={res.url} 
+                                  target="_blank" 
+                                  rel="noreferrer"
+                                  className={`p-1.5 rounded-lg transition-colors ${msg.role === 'user' ? 'hover:bg-white/20' : 'hover:bg-indigo-600 hover:text-white bg-white border border-slate-100'}`}
+                                >
+                                  <ExternalLink size={12} />
+                                </a>
+                              </div>
+                              <h5 className={`text-[13px] font-bold truncate mb-1 ${msg.role === 'user' ? 'text-white' : 'text-slate-900 group-hover:text-indigo-600'}`}>{res.title}</h5>
+                              <p className={`text-[10px] font-medium leading-relaxed line-clamp-1 ${msg.role === 'user' ? 'text-indigo-100' : 'text-slate-500'}`}>{res.description}</p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     )}
                   </div>
@@ -351,129 +397,83 @@ const AiChatPage = () => {
               ))
             )}
             {loading && (
-              <div className="flex justify-start">
-                <div className="bg-[#0b0f1a] border border-gray-800/30 p-5 rounded-3xl flex items-center gap-4">
-                  <Loader2 className="animate-spin text-[#00d09c]" size={20} />
-                  <span className="text-sm text-gray-400 italic font-medium">Intelligence is processing...</span>
+              <div className="flex justify-start animate-in fade-in slide-in-from-bottom-4 duration-300">
+                <div className="bg-white/60 backdrop-blur-3xl border border-white shadow-lg p-6 rounded-[2rem] rounded-tl-sm flex items-center gap-5">
+                  <div className="flex gap-1.5 items-center justify-center h-6">
+                    <div className="w-1.5 h-full bg-indigo-400 rounded-full animate-pulse" style={{ animationDelay: '0ms' }} />
+                    <div className="w-1.5 h-2/3 bg-indigo-500 rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
+                    <div className="w-1.5 h-full bg-indigo-600 rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
+                  </div>
+                  <span className="text-sm font-bold tracking-widest uppercase bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-sky-500 animate-pulse">Synthesizing Knowledge...</span>
                 </div>
               </div>
             )}
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Area */}
-          <div className="p-8">
-            <form onSubmit={handleSend} className="relative max-w-5xl mx-auto group">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#00d09c] to-[#00d09c]/20 rounded-2xl blur opacity-20 group-focus-within:opacity-40 transition duration-1000"></div>
-              <div className="relative">
+          {/* Professional Docked Input Area */}
+          <div className="absolute bottom-0 left-0 w-full bg-white border-t border-slate-200 p-6 shadow-[0_-10px_40px_rgba(0,0,0,0.02)] z-40">
+            <form onSubmit={handleSend} className="max-w-4xl mx-auto">
+              <div className="relative flex items-center bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden p-1 transition-all focus-within:border-indigo-400 focus-within:ring-4 focus-within:ring-indigo-50 shadow-sm">
                 <input 
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type your academic query (e.g., Explain Newton's Second Law)..."
-                  className="w-full bg-[#161b2c] border border-gray-800 text-base py-5 px-6 pr-20 rounded-2xl focus:outline-none focus:border-[#00d09c]/50 transition-all font-medium placeholder:text-gray-600"
+                  placeholder="Enter research query or strategic question..."
+                  className="w-full text-base py-4 px-5 outline-none font-medium placeholder:text-slate-400 text-slate-800 bg-transparent"
                 />
                 <button 
                   type="submit"
                   disabled={loading || !input.trim()}
-                  className={`absolute right-3 top-1/2 -translate-y-1/2 w-12 h-12 rounded-xl flex items-center justify-center transition-all shadow-lg ${loading || !input.trim() ? 'bg-gray-800 text-gray-600 cursor-not-allowed' : 'bg-[#00d09c] text-black hover:scale-105 active:scale-95'}`}
+                  className={`px-6 py-4 rounded-xl flex items-center justify-center gap-2 transition-all font-bold text-sm ${loading || !input.trim() ? 'bg-slate-200 text-slate-400' : 'bg-indigo-600 text-white hover:bg-indigo-700 active:scale-95'}`}
                 >
-                  <Send size={20} />
+                  {loading ? <Loader2 size={18} className="animate-spin" /> : <><Send size={18} /> Send</>}
                 </button>
               </div>
             </form>
-            <p className="text-center text-[10px] text-gray-600 mt-4 font-bold uppercase tracking-widest">AI Academic Assistant for SLIIT Student Success Platform</p>
           </div>
         </div>
-
-        {/* Right Sidebar: Recommendations */}
-        <div className="w-80 border-l border-gray-800/20 bg-[#0b0f1a] p-6 hidden xl:flex flex-col bg-gradient-to-b from-[#0b0f1a] to-[#0b0f1a]">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-8 h-8 bg-[#00d09c]/10 rounded-lg flex items-center justify-center border border-[#00d09c]/20">
-               <BookOpen size={16} className="text-[#00d09c]" />
-            </div>
-            <h2 className="font-bold text-sm uppercase tracking-tighter italic">Topic Intelligence</h2>
-          </div>
-          
-          <div className="flex-1 overflow-y-auto space-y-5 pr-1 hover:pr-0 transition-all custom-scrollbar">
-            {recommendations.length > 0 ? (
-              recommendations.map(res => (
-                <div key={res.id} className="bg-[#161b2c] border border-gray-800 p-5 rounded-3xl hover:border-[#00d09c]/30 hover:bg-[#1a2135] transition-all group cursor-pointer shadow-sm relative overflow-hidden">
-                  <div className="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-20 transition-opacity">
-                    <TrendingUp size={40} />
-                  </div>
-                  <div className="flex justify-between items-start mb-2">
-                    <span className="text-[10px] font-black text-[#00d09c] uppercase tracking-tighter bg-[#00d09c]/5 px-2 py-0.5 rounded border border-[#00d09c]/10">{res.type || 'RESOURCE'}</span>
-                  </div>
-                  <h4 className="text-sm font-bold text-white mb-2 leading-snug group-hover:text-[#00d09c] transition-colors">{res.title}</h4>
-                  <p className="text-[11px] text-gray-500 leading-relaxed line-clamp-3 mb-4">{res.description}</p>
-                  <a 
-                    href={res.url} 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="flex items-center justify-center gap-2 w-full text-[11px] font-bold text-black bg-[#00d09c] py-2.5 rounded-xl transition-all hover:bg-white shadow-[0_5px_15px_rgba(0,208,156,0.1)]"
-                  >
-                    Launch Material
-                    <ExternalLink size={12} />
-                  </a>
-                </div>
-              ))
-            ) : (
-              <div className="h-64 flex flex-col items-center justify-center p-8 text-center border-2 border-dashed border-gray-800/30 rounded-3xl transition-opacity">
-                <BookOpen size={40} className="mb-4 text-gray-800/20" />
-                <p className="text-[11px] text-gray-600 font-bold uppercase tracking-tight opacity-50">Intelligence will curate resources as you chat</p>
-              </div>
-            )}
-          </div>
-          
-          <div className="mt-8 pt-6 border-t border-gray-800/20">
-             <button 
-              onClick={() => window.location.href='/knowledge-hub'}
-              className="w-full text-[10px] font-black text-[#00d09c] uppercase tracking-widest hover:text-white transition-all flex items-center justify-center gap-2"
-             >
-               Visit Full Library
-               <ExternalLink size={12} />
-             </button>
-          </div>
-        </div>
-      </main>
+      </div>
 
       {/* Contextual Resources Modal */}
       {showResourcesModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-[#0b0f1a] w-full max-w-3xl max-h-[80vh] rounded-[2.5rem] border border-gray-800 shadow-2xl overflow-hidden text-left flex flex-col">
-            <div className="p-6 border-b border-gray-800 flex justify-between items-center bg-[#121826]">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#00d09c]/10 rounded-xl flex items-center justify-center border border-[#00d09c]/20">
-                  <BookOpen size={20} className="text-[#00d09c]" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300">
+          <div className="bg-white w-full max-w-4xl max-h-[85vh] rounded-[2.5rem] shadow-2xl overflow-hidden text-left flex flex-col scale-in-center overflow-hidden">
+            <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-white sticky top-0 z-10">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 border border-indigo-100">
+                  <BookOpen size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-black text-white">Recommended Resources</h3>
-                  <p className="text-xs text-gray-500 font-bold uppercase tracking-widest mt-1">Based on your recent query</p>
+                  <h3 className="text-2xl font-extrabold text-slate-900">Knowledge Deep-Dive</h3>
+                  <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Curated materials for your current query</p>
                 </div>
               </div>
-              <button onClick={() => setShowResourcesModal(false)} className="text-gray-500 hover:text-white transition-colors bg-white/5 p-2 rounded-xl">
-                <Plus size={24} className="rotate-45" />
+              <button 
+                onClick={() => setShowResourcesModal(false)} 
+                className="text-slate-400 hover:text-slate-900 hover:bg-slate-50 p-2.5 rounded-2xl transition-all"
+              >
+                <Plus size={28} className="rotate-45" />
               </button>
             </div>
             
-            <div className="p-6 overflow-y-auto flex-1 bg-[#0b0f1a]">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="p-8 overflow-y-auto flex-1 bg-slate-50/50">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {modalResources.map(res => (
-                  <div key={res.id} className="bg-[#161b2c] border border-gray-800 p-5 rounded-3xl hover:border-[#00d09c]/30 hover:bg-[#1a2135] transition-all group flex flex-col h-full shadow-lg">
-                    <div className="flex justify-between items-start mb-3">
-                      <span className="text-[10px] font-black text-[#00d09c] uppercase tracking-tighter bg-[#00d09c]/10 px-2.5 py-1 rounded-lg border border-[#00d09c]/20">{res.type || 'DOCUMENT'}</span>
-                      <span className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">{res.subject || 'GENERAL'}</span>
+                  <div key={res.id} className="bg-white border border-slate-100 p-6 rounded-3xl hover:border-indigo-200 transition-all group flex flex-col h-full shadow-sm">
+                    <div className="flex justify-between items-start mb-4">
+                      <span className="text-[10px] font-black text-indigo-600 uppercase tracking-widest bg-indigo-50 px-3 py-1 rounded-lg border border-indigo-100">{res.type || 'DOCUMENT'}</span>
+                      <span className="text-[9px] text-slate-300 font-bold uppercase tracking-widest">{res.subject || 'GENERAL'}</span>
                     </div>
-                    <h4 className="text-sm font-bold text-white mb-2 leading-snug group-hover:text-[#00d09c] transition-colors">{res.title}</h4>
-                    <p className="text-[11px] text-gray-500 leading-relaxed line-clamp-3 mb-5 flex-1">{res.description}</p>
+                    <h4 className="text-base font-extrabold text-slate-900 mb-2 leading-snug group-hover:text-indigo-600 transition-colors">{res.title}</h4>
+                    <p className="text-sm text-slate-500 leading-relaxed mb-6 flex-1">{res.description}</p>
                     <a 
                       href={res.url} 
                       target="_blank" 
                       rel="noreferrer"
-                      className="flex items-center justify-center gap-2 w-full text-[11px] font-bold text-white bg-black/40 border border-gray-700/50 py-3 rounded-xl transition-all hover:bg-[#00d09c] hover:text-black hover:border-transparent group-hover:shadow-[0_5px_15px_rgba(0,208,156,0.15)]"
+                      className="flex items-center justify-center gap-3 w-full text-xs font-bold text-white bg-slate-900 py-4 rounded-2xl transition-all hover:bg-indigo-600 active:scale-[0.98] shadow-lg"
                     >
                       Access Material
-                      <ExternalLink size={12} />
+                      <ExternalLink size={14} />
                     </a>
                   </div>
                 ))}
@@ -482,6 +482,7 @@ const AiChatPage = () => {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 };
