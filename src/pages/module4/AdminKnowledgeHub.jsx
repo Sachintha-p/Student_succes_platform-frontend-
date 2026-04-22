@@ -8,13 +8,17 @@ import {
   Edit2, 
   X, 
   Users, 
-  MessageSquare,
   BarChart3,
   TrendingUp,
   Loader2, 
   ExternalLink,
   Tag as TagIcon,
-  Book
+  Book,
+  Sparkles,
+  ArrowRight,
+  BookMarked,
+  Layers,
+  Layout
 } from 'lucide-react';
 
 const AdminKnowledgeHub = () => {
@@ -86,6 +90,7 @@ const AdminKnowledgeHub = () => {
   const openAddModal = () => {
     setFormData({ title: '', url: '', description: '', subject: '', type: 'ARTICLE', tags: '' });
     setEditResourceId(null);
+    setFormErrors({});
     setIsModalOpen(true);
   };
 
@@ -99,6 +104,7 @@ const AdminKnowledgeHub = () => {
       tags: resource.tags ? resource.tags.join(', ') : ''
     });
     setEditResourceId(resource.id);
+    setFormErrors({});
     setIsModalOpen(true);
   };
 
@@ -179,199 +185,266 @@ const AdminKnowledgeHub = () => {
   );
 
   return (
-    <div className="flex min-h-screen bg-[#090e17] text-gray-300 font-sans">
+    <div className="flex min-h-screen bg-[#f1f5f9] text-slate-600 font-sans selection:bg-indigo-100">
       <Sidebar />
 
-      <main className="flex-1 ml-72 p-10">
-        <header className="flex justify-between items-center mb-8 text-left">
-          <div>
-            <h2 className="text-3xl font-black text-white tracking-tighter italic uppercase">Admin Dashboard</h2>
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] mt-1 opacity-70">Module 4: Intelligence & Knowledge Systems</p>
+      <main className="flex-1 ml-72 p-10 relative">
+        <header className="flex justify-between items-start mb-12 text-left">
+          <div className="animate-in slide-in-from-left duration-500">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="p-1.5 bg-indigo-600 rounded-lg shadow-lg shadow-indigo-600/20">
+                <Layout size={14} className="text-white" />
+              </div>
+              <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em]">Management System</p>
+            </div>
+            <h2 className="text-4xl font-black text-slate-900 tracking-tighter italic uppercase leading-none">
+              Knowledge <span className="text-indigo-600">Hub</span> Admin
+            </h2>
           </div>
-          <button onClick={openAddModal} className="bg-[#00d09c] hover:bg-[#00e6ae] text-gray-900 px-8 py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all flex items-center gap-3 shadow-[0_10px_30px_rgba(0,208,156,0.2)] hover:scale-105 active:scale-95">
-            <Plus size={18} /> Add New Material
+          <button 
+            onClick={openAddModal} 
+            className="bg-indigo-600 hover:bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all shadow-xl shadow-indigo-600/10 flex items-center gap-3 active:scale-95"
+          >
+            <Plus size={18} /> New Material
           </button>
         </header>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-           <div className="bg-[#121826] border border-gray-800/50 p-6 rounded-[2rem] relative overflow-hidden group hover:border-[#00d09c]/30 transition-all text-left">
-              <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                <BookOpen size={100} />
-              </div>
-              <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Total Materials</p>
-              <h3 className="text-3xl font-black text-white">{stats.totalResources}</h3>
-              <div className="mt-4 flex items-center gap-2 text-[10px] font-bold text-[#00d09c]">
-                <BarChart3 size={12} /> Live Inventory
+        {/* Professional Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+           <div className="bg-[#f8fafc] border border-slate-200/60 p-10 rounded-[2.5rem] relative overflow-hidden group hover:border-indigo-400/50 transition-all text-left shadow-sm">
+              <div className="absolute right-0 top-0 w-32 h-32 bg-indigo-50 rounded-full -translate-y-12 translate-x-12 opacity-50"></div>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Inventory Assets</p>
+              <h3 className="text-5xl font-black text-slate-900 mb-6">{stats.totalResources}</h3>
+              <div className="flex items-center gap-2 text-[10px] font-bold text-indigo-600 bg-white px-4 py-2 rounded-xl w-fit border border-slate-100 shadow-sm">
+                <BarChart3 size={14} /> Live Repository
               </div>
            </div>
 
-           <div className="bg-[#121826] border border-gray-800/50 p-6 rounded-[2rem] relative overflow-hidden group hover:border-yellow-400/30 transition-all text-left">
-              <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity text-yellow-400">
-                <Users size={100} />
-              </div>
-              <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Student Bookmarks</p>
-              <h3 className="text-3xl font-black text-white">{stats.totalBookmarks}</h3>
-              <div className="mt-4 flex items-center gap-2 text-[10px] font-bold text-yellow-400">
-                <TrendingUp size={12} /> High Engagement
+           <div className="bg-[#f8fafc] border border-slate-200/60 p-10 rounded-[2.5rem] relative overflow-hidden group hover:border-blue-400/50 transition-all text-left shadow-sm">
+              <div className="absolute right-0 top-0 w-32 h-32 bg-blue-50 rounded-full -translate-y-12 translate-x-12 opacity-50"></div>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Student Outreach</p>
+              <h3 className="text-5xl font-black text-slate-900 mb-6">{stats.totalBookmarks}</h3>
+              <div className="flex items-center gap-2 text-[10px] font-bold text-blue-600 bg-white px-4 py-2 rounded-xl w-fit border border-slate-100 shadow-sm">
+                <BookMarked size={14} /> Active Bookmarks
               </div>
            </div>
 
-           <div className="bg-[#121826] border border-gray-800/50 p-6 rounded-[2rem] relative overflow-hidden group hover:border-[#00d09c]/30 transition-all text-left">
-              <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity text-[#00d09c]">
-                <TagIcon size={100} />
-              </div>
-              <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Trending Subject</p>
-              <h3 className="text-xl font-black text-white uppercase italic">{stats.trendingSubject}</h3>
-              <div className="mt-4 flex items-center gap-2 text-[10px] font-bold text-[#00d09c]">
-                <TrendingUp size={12} /> Most Searched
+           <div className="bg-[#f8fafc] border border-slate-200/60 p-10 rounded-[2.5rem] relative overflow-hidden group hover:border-emerald-400/50 transition-all text-left shadow-sm">
+              <div className="absolute right-0 top-0 w-32 h-32 bg-emerald-50 rounded-full -translate-y-12 translate-x-12 opacity-50"></div>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">High Demand Subject</p>
+              <h3 className="text-2xl font-black text-slate-900 uppercase italic mb-6 truncate leading-tight">{stats.trendingSubject}</h3>
+              <div className="flex items-center gap-2 text-[10px] font-bold text-emerald-600 bg-white px-4 py-2 rounded-xl w-fit border border-slate-100 shadow-sm">
+                <Sparkles size={14} /> Analytics Trending
               </div>
            </div>
         </div>
 
-        <div className="mb-8 flex gap-4">
-          <div className="relative flex-1 text-left">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-700" size={18} />
+        {/* Refined Search */}
+        <div className="mb-10">
+          <div className="relative group text-left max-w-2xl">
+            <Search className="absolute left-7 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" size={18} />
             <input 
               type="text" 
-              placeholder="QUICK SEARCH RESOURCES..." 
+              placeholder="QUICK SEARCH INVENTORY..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-[#0b0f1a] border border-gray-800 rounded-2xl py-5 pl-16 pr-6 text-xs font-bold text-white focus:outline-none focus:border-[#00d09c]/50 transition-all placeholder:text-gray-800 tracking-widest"
+              className="w-full bg-[#f8fafc] border border-slate-200/60 rounded-[2rem] py-6 pl-16 pr-8 text-[11px] font-bold text-slate-900 focus:outline-none focus:border-indigo-400 focus:bg-white transition-all placeholder:text-slate-400 tracking-[0.2em] shadow-sm uppercase"
             />
           </div>
         </div>
 
         {loading ? (
-          <div className="flex justify-center py-20"><Loader2 className="animate-spin text-[#00d09c]" size={40} /></div>
+          <div className="flex flex-col items-center justify-center py-32">
+            <Loader2 className="animate-spin text-indigo-600 mb-4" size={40} />
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Synchronizing Hub...</p>
+          </div>
         ) : (
-          <div className="bg-[#121826] border border-gray-800 rounded-[2.5rem] overflow-hidden shadow-2xl">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-gray-800 bg-black/20">
-                  <th className="p-6 text-[10px] font-black text-gray-500 uppercase tracking-widest">Resource</th>
-                  <th className="p-6 text-[10px] font-black text-gray-500 uppercase tracking-widest">Metadata</th>
-                  <th className="p-6 text-[10px] font-black text-gray-500 uppercase tracking-widest text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredResources.map(resource => (
-                  <tr key={resource.id} className="border-b border-gray-800/50 hover:bg-white/5 transition-colors group">
-                    <td className="p-6">
-                      <div className="flex items-center gap-4 text-left">
-                        <div className="w-12 h-12 bg-black/40 rounded-2xl flex items-center justify-center border border-gray-800 group-hover:border-[#00d09c]/30 transition-all">
-                          <Book className="text-gray-600 group-hover:text-[#00d09c] transition-colors" size={20} />
-                        </div>
-                        <div>
-                          <h4 className="text-sm font-bold text-white group-hover:text-[#00d09c] transition-colors">{resource.title}</h4>
-                          <p className="text-[10px] text-gray-600 mt-1 line-clamp-1 max-w-sm">{resource.url}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="p-6">
-                      <div className="flex flex-col gap-2 text-left">
-                        <div className="flex items-center gap-2">
-                           <span className="text-[9px] font-black bg-[#00d09c]/10 text-[#00d09c] px-2 py-0.5 rounded border border-[#00d09c]/10 uppercase">{resource.type}</span>
-                           <span className="text-[9px] font-black bg-gray-800 text-gray-400 px-2 py-0.5 rounded uppercase">{resource.subject}</span>
-                        </div>
-                        <div className="flex gap-1">
-                           {resource.tags?.map((t, i) => <span key={i} className="text-[8px] text-gray-700 italic">#{t}</span>)}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="p-6">
-                      <div className="flex gap-2 justify-end">
-                        <button onClick={() => openEditModal(resource)} className="p-3 bg-black/20 hover:bg-[#00d09c] hover:text-black rounded-xl text-gray-500 transition-all">
-                          <Edit2 size={16} />
-                        </button>
-                        <button onClick={() => triggerDelete(resource.id)} className="p-3 bg-black/20 hover:bg-red-500 hover:text-white rounded-xl text-gray-500 transition-all">
-                          <Trash2 size={16} />
-                        </button>
-                        <a href={resource.url} target="_blank" rel="noreferrer" className="p-3 bg-black/20 hover:bg-blue-500 hover:text-white rounded-xl text-gray-500 transition-all">
-                          <ExternalLink size={16} />
-                        </a>
-                      </div>
-                    </td>
+          <div className="bg-[#f8fafc] border border-slate-200/60 rounded-[3rem] overflow-hidden shadow-sm animate-in fade-in duration-1000">
+            <div className="overflow-x-auto custom-scrollbar">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="bg-slate-100/30 border-b border-slate-200/60">
+                    <th className="px-12 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">Resource Meta</th>
+                    <th className="px-12 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">Classification</th>
+                    <th className="px-12 py-8 text-[10px] font-black text-slate-400 uppercase tracking-[0.25em] text-right">Moderation</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {filteredResources.map(resource => (
+                    <tr key={resource.id} className="hover:bg-white transition-all group">
+                      <td className="px-12 py-8">
+                        <div className="flex items-center gap-6 text-left">
+                          <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center border border-slate-200 shadow-sm group-hover:border-indigo-200 transition-all">
+                            <Layers className="text-slate-500 group-hover:text-indigo-600 transition-colors" size={24} />
+                          </div>
+                          <div>
+                            <h4 className="text-base font-black text-slate-900 group-hover:text-indigo-600 transition-colors tracking-tight">{resource.title}</h4>
+                            <p className="text-[10px] text-slate-400 mt-1 line-clamp-1 max-w-md font-bold uppercase tracking-tighter opacity-70">{resource.url}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-12 py-8">
+                        <div className="flex flex-col gap-3 text-left">
+                          <div className="flex items-center gap-2">
+                             <span className="text-[9px] font-black bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-lg border border-indigo-100 uppercase tracking-widest">{resource.type}</span>
+                             <span className="text-[9px] font-black bg-slate-100 text-slate-500 px-3 py-1.5 rounded-lg border border-slate-200 uppercase tracking-widest">{resource.subject}</span>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                             {resource.tags?.map((t, i) => <span key={i} className="text-[8px] text-slate-400 font-bold hover:text-indigo-600 transition-colors cursor-default">#{t.toUpperCase()}</span>)}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-12 py-8">
+                        <div className="flex gap-3 justify-end">
+                          <button onClick={() => openEditModal(resource)} className="p-4 bg-white hover:bg-indigo-600 hover:text-white rounded-2xl text-slate-400 transition-all shadow-sm border border-slate-200">
+                            <Edit2 size={16} />
+                          </button>
+                          <button onClick={() => triggerDelete(resource.id)} className="p-4 bg-white hover:bg-red-600 hover:text-white rounded-2xl text-slate-400 transition-all shadow-sm border border-slate-200">
+                            <Trash2 size={16} />
+                          </button>
+                          <a href={resource.url} target="_blank" rel="noreferrer" className="p-4 bg-white hover:bg-slate-900 hover:text-white rounded-2xl text-slate-400 transition-all shadow-sm border border-slate-200">
+                            <ExternalLink size={16} />
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         ) }
 
+        {/* Modal Redesign - Clean Professional */}
         {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-            <div className="bg-[#121826] w-full max-w-2xl rounded-[2.5rem] border border-gray-800 shadow-2xl overflow-hidden text-left">
-              <div className="p-8 border-b border-gray-800 flex justify-between items-center bg-[#1a2130]">
-                <h3 className="text-xl font-black text-white">{editResourceId ? 'Edit Resource' : 'New Resource'}</h3>
-                <button onClick={() => setIsModalOpen(false)} className="text-gray-500 hover:text-white transition-colors"><X size={24} /></button>
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
+            <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setIsModalOpen(false)} />
+            <div className="bg-[#fcfdfe] w-full max-w-2xl rounded-[3rem] border border-slate-200 shadow-2xl overflow-hidden relative z-10 animate-in zoom-in-95 duration-500 text-left">
+              <div className="p-10 border-b border-slate-100 flex justify-between items-center bg-[#f8fafc]">
+                <div>
+                  <h3 className="text-2xl font-black text-slate-900 tracking-tight italic uppercase">Update Hub Data</h3>
+                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-1">Knowledge Resource Moderation</p>
+                </div>
+                <button onClick={() => setIsModalOpen(false)} className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-900 transition-colors shadow-sm"><X size={22} /></button>
               </div>
 
-              <form onSubmit={handleSubmit} className="p-8 space-y-6 max-h-[70vh] overflow-y-auto">
-                <div>
-                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Resource Title *</label>
-                  <input name="title" value={formData.title} onChange={handleInputChange} required className={`w-full bg-[#090e17] border ${formErrors.title ? 'border-red-500' : 'border-gray-800'} rounded-xl px-4 py-3 text-white focus:border-[#00d09c] outline-none`} placeholder="e.g. Introduction to React" />
-                  {formErrors.title && <p className="text-red-500 text-[10px] mt-1 font-bold">{formErrors.title}</p>}
-                </div>
-                <div className="grid grid-cols-2 gap-4">
+              <form onSubmit={handleSubmit} className="p-10 space-y-8 max-h-[70vh] overflow-y-auto custom-scrollbar">
+                <div className="space-y-6">
                   <div>
-                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Subject *</label>
-                    <input name="subject" value={formData.subject} onChange={handleInputChange} required className={`w-full bg-[#090e17] border ${formErrors.subject ? 'border-red-500' : 'border-gray-800'} rounded-xl px-4 py-3 text-white focus:border-[#00d09c] outline-none`} placeholder="e.g. Web Development" />
-                    {formErrors.subject && <p className="text-red-500 text-[10px] mt-1 font-bold">{formErrors.subject}</p>}
+                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 ml-1">Asset Nomenclature *</label>
+                    <input 
+                      name="title" 
+                      value={formData.title} 
+                      onChange={handleInputChange} 
+                      required 
+                      className={`w-full bg-[#f8fafc] border ${formErrors.title ? 'border-red-500' : 'border-slate-200'} rounded-2xl px-6 py-5 text-slate-900 focus:border-indigo-600 focus:bg-white outline-none transition-all placeholder:text-slate-300 font-bold`} 
+                      placeholder="e.g. Advanced AI Frameworks" 
+                    />
+                    {formErrors.title && <p className="text-red-500 text-[10px] mt-2 font-bold ml-1 uppercase">{formErrors.title}</p>}
                   </div>
+
+                  <div className="grid grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 ml-1">Academic Category *</label>
+                      <input 
+                        name="subject" 
+                        value={formData.subject} 
+                        onChange={handleInputChange} 
+                        required 
+                        className="w-full bg-[#f8fafc] border border-slate-200 rounded-2xl px-6 py-5 text-slate-900 focus:border-indigo-600 focus:bg-white outline-none transition-all font-bold" 
+                        placeholder="e.g. Engineering" 
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 ml-1">Material Type</label>
+                      <select 
+                        name="type" 
+                        value={formData.type} 
+                        onChange={handleInputChange} 
+                        className="w-full bg-[#f8fafc] border border-slate-200 rounded-2xl px-6 py-5 text-slate-900 focus:border-indigo-600 focus:bg-white outline-none transition-all font-bold appearance-none cursor-pointer"
+                      >
+                        <option value="ARTICLE">ARTICLE</option>
+                        <option value="VIDEO">VIDEO</option>
+                        <option value="PDF">PDF</option>
+                        <option value="COURSE">COURSE</option>
+                      </select>
+                    </div>
+                  </div>
+
                   <div>
-                    <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Resource Type</label>
-                    <select name="type" value={formData.type} onChange={handleInputChange} className={`w-full bg-[#090e17] border ${formErrors.type ? 'border-red-500' : 'border-gray-800'} rounded-xl px-4 py-3 text-white focus:border-[#00d09c] outline-none`}>
-                      <option value="ARTICLE">Article</option>
-                      <option value="VIDEO">Video</option>
-                      <option value="PDF">PDF</option>
-                      <option value="COURSE">Course</option>
-                    </select>
-                    {formErrors.type && <p className="text-red-500 text-[10px] mt-1 font-bold">{formErrors.type}</p>}
+                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 ml-1">Source Destination URL *</label>
+                    <input 
+                      name="url" 
+                      value={formData.url} 
+                      onChange={handleInputChange} 
+                      required 
+                      className="w-full bg-[#f8fafc] border border-slate-200 rounded-2xl px-6 py-5 text-slate-900 focus:border-indigo-600 focus:bg-white outline-none transition-all font-bold" 
+                      placeholder="https://source.sliit.lk/..." 
+                    />
                   </div>
-                </div>
-                <div>
-                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">URL *</label>
-                  <input name="url" value={formData.url} onChange={handleInputChange} required className={`w-full bg-[#090e17] border ${formErrors.url ? 'border-red-500' : 'border-gray-800'} rounded-xl px-4 py-3 text-white focus:border-[#00d09c] outline-none`} placeholder="https://..." />
-                  {formErrors.url && <p className="text-red-500 text-[10px] mt-1 font-bold">{formErrors.url}</p>}
-                </div>
-                <div>
-                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Description</label>
-                  <textarea name="description" value={formData.description} onChange={handleInputChange} rows="3" className="w-full bg-[#090e17] border border-gray-800 rounded-xl px-4 py-3 text-white focus:border-[#00d09c] outline-none" placeholder="Briefly describe the resource..."></textarea>
-                </div>
-                <div>
-                  <label className="block text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Tags (Comma separated)</label>
-                  <div className="relative">
-                    <TagIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600" size={16} />
-                    <input name="tags" value={formData.tags} onChange={handleInputChange} className="w-full bg-[#090e17] border border-gray-800 rounded-xl px-10 py-3 text-white focus:border-[#00d09c] outline-none" placeholder="react, frontend, tutorial" />
+
+                  <div>
+                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 ml-1">Executive Summary</label>
+                    <textarea 
+                      name="description" 
+                      value={formData.description} 
+                      onChange={handleInputChange} 
+                      rows="4" 
+                      className="w-full bg-[#f8fafc] border border-slate-200 rounded-2xl px-6 py-5 text-slate-900 focus:border-indigo-600 focus:bg-white outline-none transition-all font-bold resize-none" 
+                      placeholder="Provide a high-level overview..."
+                    ></textarea>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 ml-1">Keywords for Retrieval (COMMA SEPARATED)</label>
+                    <div className="relative">
+                      <TagIcon className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                      <input 
+                        name="tags" 
+                        value={formData.tags} 
+                        onChange={handleInputChange} 
+                        className="w-full bg-[#f8fafc] border border-slate-200 rounded-2xl px-16 py-5 text-slate-900 focus:border-indigo-600 focus:bg-white outline-none transition-all font-bold" 
+                        placeholder="module4, research, case-study" 
+                      />
+                    </div>
                   </div>
                 </div>
                 
-                <div className="pt-4 flex gap-4">
-                  <button type="submit" disabled={isSubmitting} className="flex-1 bg-[#00d09c] hover:bg-[#00e6ae] text-gray-900 py-4 rounded-xl font-black transition-all shadow-[0_4px_20px_rgba(0,208,156,0.2)]">
-                    {isSubmitting ? <Loader2 size={20} className="animate-spin mx-auto"/> : (editResourceId ? 'Update Resource' : 'Save Resource')}
+                <div className="pt-6 flex gap-6">
+                  <button 
+                    type="submit" 
+                    disabled={isSubmitting} 
+                    className="flex-1 bg-indigo-600 hover:bg-slate-900 text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all shadow-xl shadow-indigo-600/20 disabled:opacity-50 flex items-center justify-center gap-4"
+                  >
+                    {isSubmitting ? <Loader2 size={20} className="animate-spin"/> : (
+                      <>
+                        {editResourceId ? 'Update Inventory' : 'Publish Asset'}
+                        <ArrowRight size={18} />
+                      </>
+                    )}
                   </button>
-                  <button type="button" onClick={() => setIsModalOpen(false)} className="px-8 py-4 font-bold text-gray-500 hover:text-white transition-colors">Cancel</button>
+                  <button type="button" onClick={() => setIsModalOpen(false)} className="px-10 py-5 font-black text-[11px] text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors">Abort</button>
                 </div>
               </form>
             </div>
           </div>
         )}
 
-        {/* Top-Aligned Delete Confirmation Popup */}
+        {/* Professional Delete Popup */}
         {deleteConfirm.isOpen && (
-          <div className="fixed top-10 left-1/2 -translate-x-1/2 z-[100] animate-in slide-in-from-top-8 fade-in duration-300">
-            <div className="bg-[#1a2130] w-full max-w-lg rounded-2xl border border-red-500/50 shadow-[0_20px_60px_rgba(0,0,0,0.9)] overflow-hidden flex items-center p-4 gap-5">
-              <div className="w-10 h-10 shrink-0 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center">
-                <Trash2 size={18} />
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+            <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-300" />
+            <div className="bg-white w-full max-w-md rounded-[3rem] p-12 relative z-10 animate-in slide-in-from-bottom-10 duration-500 text-center shadow-2xl">
+              <div className="w-24 h-24 bg-red-50 text-red-600 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-red-100 shadow-inner rotate-3">
+                <Trash2 size={40} />
               </div>
-              <div className="flex-1 text-left">
-                <h3 className="text-xs font-black text-white uppercase tracking-wider">Confirm Deletion</h3>
-                <p className="text-[9px] text-gray-400 font-bold uppercase tracking-wide mt-1">This action cannot be undone.</p>
-              </div>
-              <div className="flex gap-2 shrink-0">
-                <button onClick={() => setDeleteConfirm({ isOpen: false, id: null })} className="px-4 py-2.5 font-bold text-gray-400 hover:text-white transition-colors bg-white/5 rounded-xl border border-gray-700/50 hover:bg-white/10 uppercase text-[9px] tracking-widest">Cancel</button>
-                <button onClick={confirmDelete} className="px-5 py-2.5 bg-red-500 hover:bg-red-400 text-white rounded-xl font-black transition-all shadow-[0_4px_15px_rgba(239,68,68,0.3)] active:scale-95 uppercase text-[9px] tracking-widest">Delete</button>
+              <h3 className="text-3xl font-black text-slate-900 italic tracking-tighter uppercase mb-3">Terminate Asset?</h3>
+              <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest mb-10 leading-relaxed max-w-[280px] mx-auto opacity-80">
+                This material will be permanently expunged from the knowledge database.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                <button onClick={() => setDeleteConfirm({ isOpen: false, id: null })} className="py-5 font-black text-[11px] text-slate-400 hover:text-slate-900 uppercase tracking-widest transition-colors border border-slate-200 rounded-2xl bg-[#f8fafc] shadow-sm">Cancel</button>
+                <button onClick={confirmDelete} className="py-5 bg-red-600 text-white rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-slate-900 transition-all shadow-xl shadow-red-600/10 active:scale-95">Purge</button>
               </div>
             </div>
           </div>
