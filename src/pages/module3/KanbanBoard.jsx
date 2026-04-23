@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
+import Module3Header from '../../components/Module3Header';
 import DashboardAccessButton from '../../components/DashboardAccessButton';
 import { ChevronLeft, Plus, Loader2, AlertCircle, Trash2, Edit2, Flag, Calendar } from 'lucide-react';
-import { DatePicker } from '../../components/DateTimePicker';
+import { DatePicker } from './DateTimePicker';
 
 const KanbanBoard = () => {
   const { projectId } = useParams();
@@ -253,7 +254,7 @@ const KanbanBoard = () => {
       case 'LOW':
         return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
       default:
-        return 'bg-gray-500/10 text-slate-500 border-gray-500/20';
+        return 'bg-gray-500/10 text-gray-400 border-gray-500/20';
     }
   };
 
@@ -272,12 +273,12 @@ const KanbanBoard = () => {
     <div
       onDragOver={handleDragOver}
       onDrop={(e) => handleDrop(e, status)}
-      className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col min-h-[650px] flex-1 transition-all hover:border-slate-300"
+      className="bg-[#121826] rounded-2xl border border-gray-800 p-6 flex flex-col min-h-[650px] flex-1 transition-all hover:border-gray-700"
     >
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <h3 className="text-lg font-bold text-slate-900 tracking-tight">{title}</h3>
-          <span className="bg-indigo-600/15 text-indigo-600 px-3 py-1.5 rounded-full text-[11px] font-black border border-[#00d09c]/30">
+          <h3 className="text-lg font-bold text-white tracking-tight">{title}</h3>
+          <span className="bg-[#00d09c]/15 text-[#00d09c] px-3 py-1.5 rounded-full text-[11px] font-black border border-[#00d09c]/30">
             {tasks.length}
           </span>
         </div>
@@ -285,7 +286,7 @@ const KanbanBoard = () => {
 
       <div className="space-y-3 flex-1">
         {tasks.length === 0 ? (
-          <div className="h-32 flex items-center justify-center bg-slate-50 rounded-lg border border-dashed border-slate-200">
+          <div className="h-32 flex items-center justify-center bg-[#090e17] rounded-lg border border-dashed border-gray-800">
             <p className="text-gray-600 text-sm font-bold">No tasks yet</p>
           </div>
         ) : (
@@ -294,11 +295,11 @@ const KanbanBoard = () => {
               key={task.id}
               draggable
               onDragStart={(e) => handleDragStart(e, task, status)}
-              className="bg-slate-50 rounded-xl p-4 border border-slate-200 hover:border-indigo-500/40 hover:shadow-[0_8px_25px_rgba(0,208,156,0.15)] cursor-move transition-all group"
+              className="bg-[#090e17] rounded-xl p-4 border border-gray-800 hover:border-[#00d09c]/40 hover:shadow-[0_8px_25px_rgba(0,208,156,0.15)] cursor-move transition-all group"
             >
               <div className="flex justify-between items-start mb-3">
                 <div className="flex-1">
-                  <h4 className="font-bold text-slate-900 text-sm line-clamp-2 group-hover:text-indigo-600 transition-colors">
+                  <h4 className="font-bold text-white text-sm line-clamp-2 group-hover:text-[#00d09c] transition-colors">
                     {task.title}
                   </h4>
                 </div>
@@ -314,7 +315,7 @@ const KanbanBoard = () => {
                       setEditTaskId(task.id);
                       setIsModalOpen(true);
                     }}
-                    className="p-1.5 hover:bg-indigo-600/20 text-indigo-600 rounded-lg transition-all"
+                    className="p-1.5 hover:bg-[#00d09c]/20 text-[#00d09c] rounded-lg transition-all"
                   >
                     <Edit2 size={16} />
                   </button>
@@ -328,7 +329,7 @@ const KanbanBoard = () => {
               </div>
 
               {task.description && (
-                <p className="text-slate-500 text-xs mb-3 line-clamp-2 leading-relaxed">
+                <p className="text-gray-400 text-xs mb-3 line-clamp-2 leading-relaxed">
                   {task.description}
                 </p>
               )}
@@ -340,12 +341,12 @@ const KanbanBoard = () => {
                   </span>
                   {task.isOverdue && (
                     <span className="text-[10px] font-bold bg-red-500/15 text-red-400 px-2.5 py-1.5 rounded-full border border-red-500/30">
-                      Ã¢Å¡Â  Overdue
+                      ⚠ Overdue
                     </span>
                   )}
                   {task.isUpcoming && (
                     <span className="text-[10px] font-bold bg-blue-500/15 text-blue-400 px-2.5 py-1.5 rounded-full border border-blue-500/30">
-                      Ã°Å¸â€œâ€¦ Upcoming
+                      📅 Upcoming
                     </span>
                   )}
                 </div>
@@ -365,33 +366,34 @@ const KanbanBoard = () => {
   );
 
   return (
-    <div className="bg-slate-50 text-slate-600 font-sans min-h-screen">
+    <div className="bg-[#090e17] text-gray-300 font-sans min-h-screen">
+      <Module3Header />
       <DashboardAccessButton />
       
-      <div className="flex">
+      <div className="flex pt-24">
         <Sidebar />
 
       <main className="flex-1 ml-72">
         {/* Hero Section */}
-        <div className="bg-gradient-to-b from-[#00d09c]/10 to-transparent border-b border-slate-200/50 px-10 py-12">
+        <div className="bg-gradient-to-b from-[#00d09c]/10 to-transparent border-b border-gray-800/50 px-10 py-12">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
               <button
                 onClick={() => navigate('/module3-projects')}
-                className="p-2.5 bg-white border border-slate-200 rounded-lg text-slate-500 hover:text-indigo-600 hover:border-indigo-500 transition-all"
+                className="p-2.5 bg-[#121826] border border-gray-800 rounded-lg text-gray-400 hover:text-[#00d09c] hover:border-[#00d09c] transition-all"
               >
                 <ChevronLeft size={20} />
               </button>
               <div>
-                <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">
+                <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-2">
                   {project?.name || 'Loading...'}
                 </h1>
-                <p className="text-slate-500 text-lg font-medium">Manage project tasks and progress</p>
+                <p className="text-gray-400 text-lg font-medium">Manage project tasks and progress</p>
               </div>
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="bg-indigo-600 hover:bg-[#00e6ae] text-gray-900 px-8 py-3 rounded-xl font-black transition-all flex items-center gap-2 shadow-[0_8px_20px_rgba(0,208,156,0.3)] active:scale-95 whitespace-nowrap"
+              className="bg-[#00d09c] hover:bg-[#00e6ae] text-gray-900 px-8 py-3 rounded-xl font-black transition-all flex items-center gap-2 shadow-[0_8px_20px_rgba(0,208,156,0.3)] active:scale-95 whitespace-nowrap"
             >
               <Plus size={20} /> Add Task
             </button>
@@ -408,7 +410,7 @@ const KanbanBoard = () => {
 
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <Loader2 className="animate-spin text-indigo-600" size={48} />
+            <Loader2 className="animate-spin text-[#00d09c]" size={48} />
             <p className="text-gray-500 font-bold uppercase tracking-wider text-sm">Loading tasks...</p>
           </div>
         ) : (
@@ -424,41 +426,41 @@ const KanbanBoard = () => {
         {/* Create/Edit Task Modal */}
         {isModalOpen && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-[2rem] border border-slate-200 max-w-md w-full p-8 shadow-2xl">
-              <h3 className="text-2xl font-black text-slate-900 mb-6">
+            <div className="bg-[#121826] rounded-[2rem] border border-gray-800 max-w-md w-full p-8 shadow-2xl">
+              <h3 className="text-2xl font-black text-white mb-6">
                 {editTaskId ? 'Edit Task' : 'Create New Task'}
               </h3>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-bold text-slate-500 mb-2">Task Title *</label>
+                  <label className="block text-sm font-bold text-gray-400 mb-2">Task Title *</label>
                   <input
                     type="text"
                     name="title"
                     value={formData.title}
                     onChange={handleInputChange}
                     placeholder="Enter task title"
-                    className={`w-full bg-slate-50 border rounded-xl py-2.5 px-4 text-slate-900 placeholder:text-gray-700 focus:outline-none transition-all ${
+                    className={`w-full bg-[#090e17] border rounded-xl py-2.5 px-4 text-white placeholder:text-gray-700 focus:outline-none transition-all ${
                       formErrors.title 
                         ? 'border-red-500 focus:border-red-400' 
-                        : 'border-slate-200 focus:border-indigo-500'
+                        : 'border-gray-800 focus:border-[#00d09c]'
                     }`}
                   />
                   {formErrors.title && <p className="text-red-400 text-sm mt-1">{formErrors.title}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-slate-500 mb-2">Description</label>
+                  <label className="block text-sm font-bold text-gray-400 mb-2">Description</label>
                   <textarea
                     name="description"
                     value={formData.description}
                     onChange={handleInputChange}
                     placeholder="Enter task description"
                     rows="3"
-                    className={`w-full bg-slate-50 border rounded-xl py-2.5 px-4 text-slate-900 placeholder:text-gray-700 focus:outline-none transition-all resize-none ${
+                    className={`w-full bg-[#090e17] border rounded-xl py-2.5 px-4 text-white placeholder:text-gray-700 focus:outline-none transition-all resize-none ${
                       formErrors.description 
                         ? 'border-red-500 focus:border-red-400' 
-                        : 'border-slate-200 focus:border-indigo-500'
+                        : 'border-gray-800 focus:border-[#00d09c]'
                     }`}
                   />
                   {formErrors.description && <p className="text-red-400 text-sm mt-1">{formErrors.description}</p>}
@@ -466,12 +468,12 @@ const KanbanBoard = () => {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-bold text-slate-500 mb-2">Priority *</label>
+                    <label className="block text-sm font-bold text-gray-400 mb-2">Priority *</label>
                     <select
                       name="priority"
                       value={formData.priority}
                       onChange={handleInputChange}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 px-4 text-slate-900 focus:outline-none focus:border-indigo-500 transition-all"
+                      className="w-full bg-[#090e17] border border-gray-800 rounded-xl py-2.5 px-4 text-white focus:outline-none focus:border-[#00d09c] transition-all"
                     >
                       <option value="LOW">Low</option>
                       <option value="MEDIUM">Medium</option>
@@ -510,14 +512,14 @@ const KanbanBoard = () => {
                         dueDate: ''
                       });
                     }}
-                    className="flex-1 bg-gray-800/50 hover:bg-gray-700 text-slate-600 py-2.5 rounded-xl font-bold transition-all"
+                    className="flex-1 bg-gray-800/50 hover:bg-gray-700 text-gray-300 py-2.5 rounded-xl font-bold transition-all"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex-1 bg-indigo-600 hover:bg-[#00e6ae] text-gray-900 py-2.5 rounded-xl font-bold transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                    className="flex-1 bg-[#00d09c] hover:bg-[#00e6ae] text-gray-900 py-2.5 rounded-xl font-bold transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? (
                       <>
