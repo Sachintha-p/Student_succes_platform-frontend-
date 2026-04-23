@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
-import Module3Header from '../../components/Module3Header';
 import DashboardAccessButton from '../../components/DashboardAccessButton';
 import { ChevronLeft, Save, AlertCircle, CheckCircle, X, Plus } from 'lucide-react';
-import { DatePicker, TimePicker } from './DateTimePicker';
+import { DatePicker, TimePicker } from '../../components/DateTimePicker';
 
 const CreateMeeting = () => {
   const navigate = useNavigate();
@@ -183,31 +182,30 @@ const CreateMeeting = () => {
   };
 
   return (
-    <div className="bg-[#090e17] min-h-screen">
-      <Module3Header />
+    <div className="bg-slate-50 min-h-screen">
       <DashboardAccessButton />
       
-      <div className="flex pt-24">
+      <div className="flex">
         <Sidebar />
 
       <main className="flex-1 ml-72">
         {/* Hero Section */}
-        <div className="bg-gradient-to-b from-[#00d09c]/10 to-transparent border-b border-gray-800/50 px-10 py-12">
+        <div className="bg-gradient-to-b from-[#00d09c]/10 to-transparent border-b border-slate-200/50 px-10 py-12">
           <div className="flex items-center gap-6">
             <button
               onClick={() => navigate('/module3-meetings')}
-              className="p-2.5 bg-[#121826] border border-gray-800 rounded-lg text-gray-400 hover:text-[#00d09c] hover:border-[#00d09c] transition-all"
+              className="p-2.5 bg-white border border-slate-200 rounded-lg text-slate-500 hover:text-indigo-600 hover:border-indigo-500 transition-all"
             >
               <ChevronLeft size={20} />
             </button>
             <div>
-              <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-2">Schedule Meeting</h1>
-              <p className="text-gray-400 text-lg font-medium">Create a group meeting with proposed time slots</p>
+              <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">Schedule Meeting</h1>
+              <p className="text-slate-500 text-lg font-medium">Create a group meeting with proposed time slots</p>
             </div>
           </div>
         </div>
 
-        <div className="p-10 text-gray-300 font-sans">
+        <div className="p-10 text-slate-600 font-sans">
         {/* Success Message */}
         {successMessage && (
           <div className="mb-8 bg-green-500/15 border border-green-500/40 text-green-400 p-5 rounded-lg flex items-center gap-3">
@@ -217,7 +215,7 @@ const CreateMeeting = () => {
         )}
 
         {/* Form Container */}
-        <div className="bg-[#121826] border border-gray-800 rounded-2xl p-10 max-w-3xl shadow-lg">
+        <div className="bg-white border border-slate-200 rounded-2xl p-10 max-w-3xl shadow-lg">
           <form onSubmit={handleSubmit} className="space-y-7">
             {/* Error Alert */}
             {errors.submit && (
@@ -238,10 +236,10 @@ const CreateMeeting = () => {
                 value={formData.groupId}
                 onChange={handleChange}
                 min="1"
-                className={`w-full bg-[#090e17] border rounded-lg py-3.5 px-5 text-white focus:outline-none transition-all ${
+                className={`w-full bg-slate-50 border rounded-lg py-3.5 px-5 text-slate-900 focus:outline-none transition-all ${
                   errors.groupId
                     ? 'border-red-500/60 focus:border-red-400'
-                    : 'border-gray-800 hover:border-gray-700 focus:border-[#00d09c]'
+                    : 'border-slate-200 hover:border-slate-300 focus:border-indigo-500'
                 }`}
               />
               {errors.groupId && <p className="text-red-400  text-sm mt-2.5 font-medium">{errors.groupId}</p>}
@@ -258,10 +256,10 @@ const CreateMeeting = () => {
                 value={formData.title}
                 onChange={handleChange}
                 placeholder="e.g., Project Planning Session"
-                className={`w-full bg-[#090e17] border rounded-lg py-3.5 px-5 text-white placeholder:text-gray-600 focus:outline-none transition-all ${
+                className={`w-full bg-slate-50 border rounded-lg py-3.5 px-5 text-slate-900 placeholder:text-gray-600 focus:outline-none transition-all ${
                   errors.title
                     ? 'border-red-500/60 focus:border-red-400'
-                    : 'border-gray-800 hover:border-gray-700 focus:border-[#00d09c]'
+                    : 'border-slate-200 hover:border-slate-300 focus:border-indigo-500'
                 }`}
               />
               {errors.title && <p className="text-red-400 text-sm mt-2.5 font-medium">{errors.title}</p>}
@@ -278,10 +276,10 @@ const CreateMeeting = () => {
                 value={formData.location}
                 onChange={handleChange}
                 placeholder="e.g., Library Room 102, Main Building"
-                className={`w-full bg-[#090e17] border rounded-lg py-3.5 px-5 text-white placeholder:text-gray-600 focus:outline-none transition-all ${
+                className={`w-full bg-slate-50 border rounded-lg py-3.5 px-5 text-slate-900 placeholder:text-gray-600 focus:outline-none transition-all ${
                   errors.location
                     ? 'border-red-500/60 focus:border-red-400'
-                    : 'border-gray-800 hover:border-gray-700 focus:border-[#00d09c]'
+                    : 'border-slate-200 hover:border-slate-300 focus:border-indigo-500'
                 }`}
               />
               {errors.location && <p className="text-red-400 text-sm mt-2.5 font-medium">{errors.location}</p>}
@@ -298,10 +296,10 @@ const CreateMeeting = () => {
                 value={formData.meetingLink}
                 onChange={handleChange}
                 placeholder="e.g., https://meet.google.com/..."
-                className={`w-full bg-[#090e17] border rounded-lg py-3.5 px-5 text-white placeholder:text-gray-600 focus:outline-none transition-all ${
+                className={`w-full bg-slate-50 border rounded-lg py-3.5 px-5 text-slate-900 placeholder:text-gray-600 focus:outline-none transition-all ${
                   errors.meetingLink
                     ? 'border-red-500/60 focus:border-red-400'
-                    : 'border-gray-800 hover:border-gray-700 focus:border-[#00d09c]'
+                    : 'border-slate-200 hover:border-slate-300 focus:border-indigo-500'
                 }`}
               />
               {errors.meetingLink && <p className="text-red-400 text-sm mt-2.5 font-medium">{errors.meetingLink}</p>}
@@ -331,7 +329,7 @@ const CreateMeeting = () => {
                 <button
                   type="button"
                   onClick={addProposedDate}
-                  className="w-full bg-[#00d09c] hover:bg-[#00e6ae] text-gray-900 px-6 py-3.5 rounded-lg font-bold transition-all flex items-center justify-center gap-2 active:scale-95 shadow-[0_4px_12px_rgba(0,208,156,0.2)]"
+                  className="w-full bg-indigo-600 hover:bg-[#00e6ae] text-gray-900 px-6 py-3.5 rounded-lg font-bold transition-all flex items-center justify-center gap-2 active:scale-95 shadow-[0_4px_12px_rgba(0,208,156,0.2)]"
                 >
                   <Plus size={18} /> Add to Schedule
                 </button>
@@ -343,8 +341,8 @@ const CreateMeeting = () => {
                   <div className="space-y-2.5">
                     <p className="text-xs text-gray-500 uppercase tracking-wider font-bold">{formData.proposedDates.length} Date{formData.proposedDates.length !== 1 ? 's' : ''} Added</p>
                     {formData.proposedDates.map((date, idx) => (
-                      <div key={idx} className="bg-[#090e17] p-4 rounded-lg border border-gray-800 flex items-center justify-between hover:border-gray-700 transition-all">
-                        <span className="text-white font-medium">{formatDateForDisplay(date)}</span>
+                      <div key={idx} className="bg-slate-50 p-4 rounded-lg border border-slate-200 flex items-center justify-between hover:border-slate-300 transition-all">
+                        <span className="text-slate-900 font-medium">{formatDateForDisplay(date)}</span>
                         <button
                           type="button"
                           onClick={() => removeProposedDate(idx)}
@@ -362,18 +360,18 @@ const CreateMeeting = () => {
             </div>
 
             {/* Submit Button */}
-            <div className="flex gap-4 pt-6 border-t border-gray-800">
+            <div className="flex gap-4 pt-6 border-t border-slate-200">
               <button
                 type="button"
                 onClick={() => navigate('/module3-meetings')}
-                className="flex-1 bg-gray-800/60 hover:bg-gray-700/70 text-gray-300 py-3.5 rounded-lg font-bold transition-all active:scale-95"
+                className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3.5 rounded-lg font-bold transition-all active:scale-95"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 bg-[#00d09c] hover:bg-[#00e6ae] text-gray-900 py-3.5 rounded-lg font-black transition-all shadow-[0_6px_20px_rgba(0,208,156,0.3)] active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50"
+                className="flex-1 bg-indigo-600 hover:bg-[#00e6ae] text-gray-900 py-3.5 rounded-lg font-black transition-all shadow-[0_6px_20px_rgba(0,208,156,0.3)] active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <Save size={18} />
                 {loading ? 'Scheduling...' : 'Schedule Meeting'}

@@ -14,7 +14,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { useParams } from 'react-router-dom';
-import { DatePicker } from './DateTimePicker';
+import { DatePicker } from '../../components/DateTimePicker';
 
 const MilestoneList = () => {
   const { projectId } = useParams();
@@ -325,15 +325,15 @@ const MilestoneList = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case 'NOT_STARTED':
-        return 'bg-gray-500/15 text-gray-400 border-gray-500/30';
+        return 'bg-gray-500/15 text-slate-500 border-gray-500/30';
       case 'IN_PROGRESS':
-        return 'bg-[#00d09c]/15 text-[#00d09c] border-[#00d09c]/30';
+        return 'bg-indigo-600/15 text-indigo-600 border-[#00d09c]/30';
       case 'COMPLETED':
         return 'bg-green-500/15 text-green-400 border-green-500/30';
       case 'ON_HOLD':
         return 'bg-yellow-500/15 text-yellow-400 border-yellow-500/30';
       default:
-        return 'bg-gray-500/15 text-gray-400 border-gray-500/30';
+        return 'bg-gray-500/15 text-slate-500 border-gray-500/30';
     }
   };
 
@@ -349,25 +349,25 @@ const MilestoneList = () => {
     <div className="min-h-screen bg-gradient-to-br from-[#090e17] via-[#121826] to-[#090e17]">
       {/* Background decoration */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 -left-32 w-72 h-72 bg-[#00d09c]/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 -right-32 w-72 h-72 bg-[#00d09c]/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 -left-32 w-72 h-72 bg-indigo-600/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 -right-32 w-72 h-72 bg-indigo-600/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-10">
         {/* Header */}
-        <div className="border-b border-gray-800 bg-[#121826]/40 backdrop-blur-sm sticky top-0 z-20">
+        <div className="border-b border-slate-200 bg-white/40 backdrop-blur-sm sticky top-0 z-20">
           <div className="max-w-7xl mx-auto px-6 py-8">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h1 className="text-4xl font-black text-white mb-2">Project Milestones</h1>
-                <p className="text-gray-400 font-medium">Track and manage your project milestones</p>
+                <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-6">Project Milestones</h1>
+                <p className="text-slate-500 font-medium">Track and manage your project milestones</p>
               </div>
               <button
                 onClick={() => {
                   resetForm();
                   setIsModalOpen(true);
                 }}
-                className="bg-[#00d09c] hover:bg-[#00e6ae] text-gray-900 px-8 py-3 rounded-xl font-black transition-all flex items-center gap-2 shadow-[0_8px_20px_rgba(0,208,156,0.3)] active:scale-95"
+                className="bg-indigo-600 hover:bg-[#00e6ae] text-gray-900 px-8 py-3 rounded-xl font-black transition-all flex items-center gap-2 shadow-[0_8px_20px_rgba(0,208,156,0.3)] active:scale-95"
               >
                 <Plus size={20} /> New Milestone
               </button>
@@ -376,21 +376,21 @@ const MilestoneList = () => {
             {/* Summary Stats */}
             {summary && (
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="bg-[#090e17] rounded-lg border border-gray-800 p-4">
-                  <div className="text-gray-400 text-sm font-bold mb-2">Total Milestones</div>
-                  <div className="text-2xl font-black text-white">{summary.totalMilestones}</div>
+                <div className="bg-slate-50 rounded-lg border border-slate-200 p-4">
+                  <div className="text-slate-500 text-sm font-bold mb-2">Total Milestones</div>
+                  <div className="text-2xl font-black text-slate-900">{summary.totalMilestones}</div>
                 </div>
-                <div className="bg-[#090e17] rounded-lg border border-gray-800 p-4">
-                  <div className="text-gray-400 text-sm font-bold mb-2">Completed</div>
+                <div className="bg-slate-50 rounded-lg border border-slate-200 p-4">
+                  <div className="text-slate-500 text-sm font-bold mb-2">Completed</div>
                   <div className="text-2xl font-black text-green-400">{summary.completedMilestones}</div>
                 </div>
-                <div className="bg-[#090e17] rounded-lg border border-gray-800 p-4">
-                  <div className="text-gray-400 text-sm font-bold mb-2">Overdue</div>
+                <div className="bg-slate-50 rounded-lg border border-slate-200 p-4">
+                  <div className="text-slate-500 text-sm font-bold mb-2">Overdue</div>
                   <div className="text-2xl font-black text-red-400">{summary.overdueMilestones}</div>
                 </div>
-                <div className="bg-[#090e17] rounded-lg border border-gray-800 p-4">
-                  <div className="text-gray-400 text-sm font-bold mb-2">Overall Progress</div>
-                  <div className="text-2xl font-black text-[#00d09c]">
+                <div className="bg-slate-50 rounded-lg border border-slate-200 p-4">
+                  <div className="text-slate-500 text-sm font-bold mb-2">Overall Progress</div>
+                  <div className="text-2xl font-black text-indigo-600">
                     {Math.round(summary.overallProgressPercentage)}%
                   </div>
                 </div>
@@ -425,8 +425,8 @@ const MilestoneList = () => {
                   onClick={() => setFilterStatus(status)}
                   className={`px-4 py-2 rounded-lg font-bold transition-all text-sm ${
                     filterStatus === status
-                      ? 'bg-[#00d09c] text-gray-900'
-                      : 'bg-gray-800/40 text-gray-400 hover:bg-gray-800/60'
+                      ? 'bg-indigo-600 text-gray-900'
+                      : 'bg-gray-800/40 text-slate-500 hover:bg-gray-800/60'
                   }`}
                 >
                   {status.replace(/_/g, ' ')}
@@ -438,7 +438,7 @@ const MilestoneList = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="bg-gray-800/40 text-white px-4 py-2 rounded-lg border border-gray-800 font-bold focus:outline-none focus:border-[#00d09c] transition-colors"
+                className="bg-slate-100 text-slate-800 px-4 py-2 rounded-lg border border-slate-300 font-bold focus:outline-none focus:border-indigo-500 transition-colors"
               >
                 <option value="dueDate">Sort by Due Date</option>
                 <option value="progress">Sort by Progress</option>
@@ -452,19 +452,19 @@ const MilestoneList = () => {
         <div className="max-w-7xl mx-auto px-6 pb-20">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-20 gap-4">
-              <Loader2 className="animate-spin text-[#00d09c]" size={48} />
+              <Loader2 className="animate-spin text-indigo-600" size={48} />
               <p className="text-gray-500 font-bold uppercase tracking-wider text-sm">Loading milestones...</p>
             </div>
           ) : filteredMilestones.length === 0 ? (
-            <div className="bg-[#121826]/40 rounded-2xl border border-dashed border-gray-800 p-20 text-center">
+            <div className="bg-white/40 rounded-2xl border border-dashed border-slate-200 p-20 text-center">
               <Flag className="mx-auto text-gray-600 mb-4" size={48} />
-              <p className="text-gray-400 font-bold mb-5 text-lg">No milestones found</p>
+              <p className="text-slate-500 font-bold mb-5 text-lg">No milestones found</p>
               <button
                 onClick={() => {
                   resetForm();
                   setIsModalOpen(true);
                 }}
-                className="bg-[#00d09c] hover:bg-[#00e6ae] text-gray-900 px-8 py-3 rounded-lg font-black transition-all inline-flex items-center gap-2 shadow-[0_6px_20px_rgba(0,208,156,0.3)] active:scale-95"
+                className="bg-indigo-600 hover:bg-[#00e6ae] text-gray-900 px-8 py-3 rounded-lg font-black transition-all inline-flex items-center gap-2 shadow-[0_6px_20px_rgba(0,208,156,0.3)] active:scale-95"
               >
                 <Plus size={18} /> Create your first milestone
               </button>
@@ -478,13 +478,13 @@ const MilestoneList = () => {
                 return (
                   <div
                     key={milestone.id}
-                    className="bg-[#121826] rounded-xl border border-gray-800 hover:border-[#00d09c]/40 transition-all hover:shadow-[0_8px_25px_rgba(0,208,156,0.15)] overflow-hidden group"
+                    className="bg-white rounded-xl border border-slate-200 hover:border-indigo-500/40 transition-all hover:shadow-[0_8px_25px_rgba(0,208,156,0.15)] overflow-hidden group"
                   >
                     <div className="p-6">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
-                            <h3 className="text-xl font-bold text-white group-hover:text-[#00d09c] transition-colors">
+                            <h3 className="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
                               {milestone.title}
                             </h3>
                             <span
@@ -497,19 +497,19 @@ const MilestoneList = () => {
 
                             {overdueStatus === 'overdue' && (
                               <span className="text-xs font-bold bg-red-500/15 text-red-400 px-3 py-1.5 rounded-full border border-red-500/30">
-                                ⚠ Overdue
+                                Ã¢Å¡Â  Overdue
                               </span>
                             )}
 
                             {overdueStatus === 'upcoming' && (
                               <span className="text-xs font-bold bg-yellow-500/15 text-yellow-400 px-3 py-1.5 rounded-full border border-yellow-500/30">
-                                ⏰ Due Soon
+                                Ã¢ÂÂ° Due Soon
                               </span>
                             )}
                           </div>
 
                           {milestone.description && (
-                            <p className="text-gray-400 text-sm mb-3 line-clamp-2">
+                            <p className="text-slate-500 text-sm mb-3 line-clamp-2">
                               {milestone.description}
                             </p>
                           )}
@@ -518,7 +518,7 @@ const MilestoneList = () => {
                         <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button
                             onClick={() => handleEdit(milestone)}
-                            className="p-2 hover:bg-[#00d09c]/20 text-[#00d09c] rounded-lg transition-all"
+                            className="p-2 hover:bg-indigo-600/20 text-indigo-600 rounded-lg transition-all"
                             title="Edit milestone"
                           >
                             <Edit2 size={18} />
@@ -536,10 +536,10 @@ const MilestoneList = () => {
                       {/* Progress Bar */}
                       <div className="mb-4">
                         <div className="flex justify-between mb-2">
-                          <span className="text-xs font-bold text-gray-400">Progress</span>
-                          <span className="text-xs font-bold text-[#00d09c]">{milestone.progressPercentage}%</span>
+                          <span className="text-xs font-bold text-slate-500">Progress</span>
+                          <span className="text-xs font-bold text-indigo-600">{milestone.progressPercentage}%</span>
                         </div>
-                        <div className="w-full bg-gray-800/50 rounded-full h-2 overflow-hidden border border-gray-800/50">
+                        <div className="w-full bg-gray-800/50 rounded-full h-2 overflow-hidden border border-slate-200/50">
                           <div
                             className="bg-gradient-to-r from-[#00d09c] to-[#00e6ae] h-full transition-all duration-500"
                             style={{ width: `${milestone.progressPercentage}%` }}
@@ -549,24 +549,24 @@ const MilestoneList = () => {
 
                       {/* Timeline Info */}
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                        <div className="flex items-center gap-2 text-gray-400">
-                          <Calendar size={16} className="text-[#00d09c]" />
+                        <div className="flex items-center gap-2 text-slate-500">
+                          <Calendar size={16} className="text-indigo-600" />
                           <div>
                             <div className="text-xs font-bold text-gray-500">Start Date</div>
-                            <div className="font-bold text-white">{formatDate(milestone.startDate)}</div>
+                            <div className="font-bold text-slate-900">{formatDate(milestone.startDate)}</div>
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2 text-gray-400">
-                          <Clock size={16} className="text-[#00d09c]" />
+                        <div className="flex items-center gap-2 text-slate-500">
+                          <Clock size={16} className="text-indigo-600" />
                           <div>
                             <div className="text-xs font-bold text-gray-500">Due Date</div>
-                            <div className="font-bold text-white">{formatDate(milestone.dueDate)}</div>
+                            <div className="font-bold text-slate-900">{formatDate(milestone.dueDate)}</div>
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2 text-gray-400">
-                          <Zap size={16} className="text-[#00d09c]" />
+                        <div className="flex items-center gap-2 text-slate-500">
+                          <Zap size={16} className="text-indigo-600" />
                           <div>
                             <div className="text-xs font-bold text-gray-500">Days Remaining</div>
                             <div
@@ -595,10 +595,10 @@ const MilestoneList = () => {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#121826] rounded-2xl border border-gray-800 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+          <div className="bg-white rounded-2xl border border-slate-200 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
             {/* Modal Header */}
-            <div className="sticky top-0 bg-[#121826] border-b border-gray-800 px-8 py-6 flex items-center justify-between">
-              <h2 className="text-2xl font-black text-white">
+            <div className="sticky top-0 bg-white border-b border-slate-200 px-8 py-6 flex items-center justify-between">
+              <h2 className="text-2xl font-black text-slate-900">
                 {editMilestoneId ? 'Edit Milestone' : 'Create New Milestone'}
               </h2>
               <button
@@ -606,7 +606,7 @@ const MilestoneList = () => {
                   setIsModalOpen(false);
                   resetForm();
                 }}
-                className="p-2 hover:bg-gray-800/50 text-gray-400 hover:text-white rounded-lg transition-all"
+                className="p-2 hover:bg-gray-800/50 text-slate-500 hover:text-slate-900 rounded-lg transition-all"
               >
                 <X size={24} />
               </button>
@@ -616,7 +616,7 @@ const MilestoneList = () => {
             <form onSubmit={handleSubmit} className="p-8 space-y-6">
               {/* Title */}
               <div>
-                <label className="block text-white font-bold text-sm mb-3 uppercase tracking-wider">
+                <label className="block text-slate-900 font-bold text-sm mb-3 uppercase tracking-wider">
                   <span>Milestone Title</span>
                   <span className="text-red-400">*</span>
                 </label>
@@ -626,8 +626,8 @@ const MilestoneList = () => {
                   value={formData.title}
                   onChange={handleChange}
                   placeholder="Enter milestone title"
-                  className={`w-full bg-gray-900/50 border-2 text-white px-4 py-3 rounded-lg focus:outline-none transition-colors ${
-                    formErrors.title ? 'border-red-500' : 'border-gray-800 focus:border-[#00d09c]'
+                  className={`w-full bg-gray-900/50 border-2 text-slate-900 px-4 py-3 rounded-lg focus:outline-none transition-colors ${
+                    formErrors.title ? 'border-red-500' : 'border-slate-200 focus:border-indigo-500'
                   }`}
                 />
                 {formErrors.title && (
@@ -640,7 +640,7 @@ const MilestoneList = () => {
 
               {/* Description */}
               <div>
-                <label className="block text-white font-bold text-sm mb-3 uppercase tracking-wider">
+                <label className="block text-slate-900 font-bold text-sm mb-3 uppercase tracking-wider">
                   Description
                 </label>
                 <textarea
@@ -649,8 +649,8 @@ const MilestoneList = () => {
                   onChange={handleChange}
                   placeholder="Enter milestone description (optional)"
                   rows="4"
-                  className={`w-full bg-gray-900/50 border-2 text-white px-4 py-3 rounded-lg focus:outline-none transition-colors resize-none ${
-                    formErrors.description ? 'border-red-500' : 'border-gray-800 focus:border-[#00d09c]'
+                  className={`w-full bg-gray-900/50 border-2 text-slate-900 px-4 py-3 rounded-lg focus:outline-none transition-colors resize-none ${
+                    formErrors.description ? 'border-red-500' : 'border-slate-200 focus:border-indigo-500'
                   }`}
                 />
                 {formErrors.description && (
@@ -685,14 +685,14 @@ const MilestoneList = () => {
               {/* Status and Progress */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-white font-bold text-sm mb-3 uppercase tracking-wider">
+                  <label className="block text-slate-900 font-bold text-sm mb-3 uppercase tracking-wider">
                     Status
                   </label>
                   <select
                     name="status"
                     value={formData.status}
                     onChange={handleChange}
-                    className="w-full bg-gray-900/50 border-2 border-gray-800 text-white px-4 py-3 rounded-lg focus:outline-none focus:border-[#00d09c] transition-colors"
+                    className="w-full bg-gray-900/50 border-2 border-slate-200 text-slate-900 px-4 py-3 rounded-lg focus:outline-none focus:border-indigo-500 transition-colors"
                   >
                     <option value="NOT_STARTED">Not Started</option>
                     <option value="IN_PROGRESS">In Progress</option>
@@ -702,7 +702,7 @@ const MilestoneList = () => {
                 </div>
 
                 <div>
-                  <label className="block text-white font-bold text-sm mb-3 uppercase tracking-wider">
+                  <label className="block text-slate-900 font-bold text-sm mb-3 uppercase tracking-wider">
                     Progress (%)
                   </label>
                   <div className="flex gap-2 items-center">
@@ -715,7 +715,7 @@ const MilestoneList = () => {
                       onChange={handleChange}
                       className="flex-1 h-2 bg-gray-800 rounded-full appearance-none cursor-pointer accent-[#00d09c]"
                     />
-                    <span className="text-white font-bold text-lg min-w-[50px] text-right">
+                    <span className="text-slate-900 font-bold text-lg min-w-[50px] text-right">
                       {formData.progressPercentage}%
                     </span>
                   </div>
@@ -726,20 +726,20 @@ const MilestoneList = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-4 pt-6 border-t border-gray-800">
+              <div className="flex gap-4 pt-6 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => {
                     setIsModalOpen(false);
                     resetForm();
                   }}
-                  className="flex-1 bg-gray-800/50 hover:bg-gray-800 text-white px-6 py-3 rounded-lg font-bold transition-all"
+                  className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 px-6 py-3 rounded-lg font-bold transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-[#00d09c] hover:bg-[#00e6ae] text-gray-900 px-6 py-3 rounded-lg font-bold transition-all active:scale-95"
+                  className="flex-1 bg-indigo-600 hover:bg-[#00e6ae] text-gray-900 px-6 py-3 rounded-lg font-bold transition-all active:scale-95"
                 >
                   {editMilestoneId ? 'Update Milestone' : 'Create Milestone'}
                 </button>
