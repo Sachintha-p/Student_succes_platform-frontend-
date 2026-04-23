@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   User, Briefcase, Search, Users, LogOut, Brain, 
   BookOpen, Bell, Sparkles, LayoutDashboard, 
-  Calendar, CheckSquare, ChevronDown 
+  Calendar, CheckSquare, ChevronDown, ClipboardList // Added ClipboardList
 } from 'lucide-react';
 
 const API = 'http://localhost:8080';
@@ -86,6 +86,7 @@ const Sidebar = () => {
   const adminItems = [
     { name: 'Control Panel', icon: <LayoutDashboard size={20} />, path: '/module3-dashboard', color: 'text-indigo-600' },
     { name: 'Jobs Admin', icon: <Briefcase size={20} />, path: '/admin-job-dashboard', color: 'text-emerald-600' },
+    { name: 'Job Applications', icon: <ClipboardList size={20} />, path: '/admin-job-applications', color: 'text-blue-600' }, // Added Item
     { name: 'Resources Admin', icon: <BookOpen size={20} />, path: '/admin-knowledge-hub', color: 'text-amber-600' },
     { name: 'AI Analytics', icon: <Brain size={20} />, path: '/admin-ai-assistant', color: 'text-sky-600' },
   ];

@@ -199,8 +199,14 @@ const AdminJobListings = () => {
           <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50 rounded-full blur-[80px] -mr-32 -mt-32"></div>
           <div className="relative z-10 flex flex-col xl:flex-row justify-between items-start xl:items-center gap-10">
             <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 bg-indigo-50 text-indigo-600 px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest border border-indigo-100 mb-6 shadow-sm">
-                <Info size={14} /> Admin Dashboard
+              <div className="flex items-center gap-3 mb-6">
+                <div className="inline-flex items-center gap-2 bg-indigo-50 text-indigo-600 px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest border border-indigo-100 shadow-sm">
+                  <Info size={14} /> Admin Dashboard
+                </div>
+                {/* JOB COUNT DISPLAY */}
+                <div className="inline-flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-sm">
+                  <Briefcase size={14} /> {jobs.length} Positions Active
+                </div>
               </div>
               <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">Manage Job <span className="text-indigo-600">Postings</span></h1>
               <p className="text-slate-400 text-base font-medium italic">Create and curate professional opportunities for the student body.</p>
