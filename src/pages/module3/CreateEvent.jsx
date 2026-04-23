@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar';
-import Module3Header from '../../components/Module3Header';
-import DashboardAccessButton from '../../components/DashboardAccessButton';
+import Sidebar from "../../components/Sidebar";
+import DashboardAccessButton from "../../components/DashboardAccessButton";
 import { ChevronLeft, Save, AlertCircle, CheckCircle } from 'lucide-react';
-import { DatePicker, TimePicker } from './DateTimePicker';
+import { DatePicker, TimePicker } from '../../components/DateTimePicker';
 
 const CreateEvent = () => {
   const navigate = useNavigate();
@@ -143,26 +142,25 @@ const CreateEvent = () => {
   };
 
   return (
-    <div className="bg-[#090e17] text-gray-300 font-sans min-h-screen">
-      <Module3Header/>
+    <div className="bg-slate-50 text-slate-600 font-sans min-h-screen">
       <DashboardAccessButton />
       
-      <div className="flex pt-24">
+      <div className="flex">
         <Sidebar/>
 
         <main className="flex-1 ml-72">
         {/* Hero Section */}
-        <div className="bg-gradient-to-b from-[#00d09c]/10 to-transparent border-b border-gray-800/50 px-10 py-12">
+        <div className="bg-gradient-to-b from-[#00d09c]/10 to-transparent border-b border-slate-200/50 px-10 py-12">
           <div className="flex items-center gap-6">
             <button
               onClick={() => navigate('/module3')}
-              className="p-2.5 bg-[#121826] border border-gray-800 rounded-lg text-gray-400 hover:text-[#00d09c] hover:border-[#00d09c] transition-all"
+              className="p-2.5 bg-white border border-slate-200 rounded-lg text-slate-500 hover:text-indigo-600 hover:border-indigo-500 transition-all"
             >
               <ChevronLeft size={20} />
             </button>
             <div>
-              <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-2">Create New Event</h1>
-              <p className="text-gray-400 text-lg font-medium">Organize and promote a campus event</p>
+              <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight mb-6">Create New Event</h1>
+              <p className="text-slate-600 text-lg font-medium">Organize and promote a campus event</p>
             </div>
           </div>
         </div>
@@ -177,7 +175,7 @@ const CreateEvent = () => {
         )}
 
         {/* Form Container */}
-        <div className="bg-[#121826] border border-gray-800 rounded-2xl p-10 max-w-3xl shadow-lg">
+        <div className="bg-white border border-slate-200 rounded-2xl p-10 max-w-3xl shadow-lg">
           <form onSubmit={handleSubmit} className="space-y-7">
             {/* Error Alert */}
             {errors.submit && (
@@ -198,10 +196,10 @@ const CreateEvent = () => {
                 value={formData.title}
                 onChange={handleChange}
                 placeholder="e.g., Tech Talk: AI in Education"
-                className={`w-full bg-[#090e17] border rounded-lg py-3.5 px-5 text-white placeholder:text-gray-600 focus:outline-none transition-all ${
+                className={`w-full bg-slate-50 border rounded-lg py-3.5 px-5 text-slate-900 placeholder:text-gray-600 focus:outline-none transition-all ${
                   errors.title
                     ? 'border-red-500/60 focus:border-red-400'
-                    : 'border-gray-800 hover:border-gray-700 focus:border-[#00d09c]'
+                    : 'border-slate-200 hover:border-slate-300 focus:border-indigo-500'
                 }`}
               />
               {errors.title && <p className="text-red-400 text-sm mt-2.5 font-medium">{errors.title}</p>}
@@ -218,10 +216,10 @@ const CreateEvent = () => {
                 onChange={handleChange}
                 placeholder="Tell us about the event..."
                 rows="5"
-                className={`w-full bg-[#090e17] border rounded-lg py-3.5 px-5 text-white placeholder:text-gray-600 focus:outline-none transition-all resize-none ${
+                className={`w-full bg-slate-50 border rounded-lg py-3.5 px-5 text-slate-900 placeholder:text-gray-600 focus:outline-none transition-all resize-none ${
                   errors.description
                     ? 'border-red-500/60 focus:border-red-400'
-                    : 'border-gray-800 hover:border-gray-700 focus:border-[#00d09c]'
+                    : 'border-slate-200 hover:border-slate-300 focus:border-indigo-500'
                 }`}
               />
               {errors.description && <p className="text-red-400 text-sm mt-2.5 font-medium">{errors.description}</p>}
@@ -252,8 +250,8 @@ const CreateEvent = () => {
             </div>
 
             {/* Online Toggle */}
-            <div className="bg-[#090e17] border border-gray-800 rounded-lg p-5 flex items-center justify-between">
-              <label htmlFor="isOnline" className="text-white font-bold cursor-pointer">
+            <div className="bg-slate-50 border border-slate-200 rounded-lg p-5 flex items-center justify-between">
+              <label htmlFor="isOnline" className="text-slate-900 font-bold cursor-pointer">
                 This is an online event
               </label>
               <input
@@ -278,10 +276,10 @@ const CreateEvent = () => {
                   value={formData.venue}
                   onChange={handleChange}
                   placeholder="e.g., Auditorium A, Main Campus"
-                  className={`w-full bg-[#090e17] border rounded-lg py-3.5 px-5 text-white placeholder:text-gray-600 focus:outline-none transition-all ${
+                  className={`w-full bg-slate-50 border rounded-lg py-3.5 px-5 text-slate-900 placeholder:text-gray-600 focus:outline-none transition-all ${
                     errors.venue
                       ? 'border-red-500/60 focus:border-red-400'
-                      : 'border-gray-800 hover:border-gray-700 focus:border-[#00d09c]'
+                      : 'border-slate-200 hover:border-slate-300 focus:border-indigo-500'
                   }`}
                 />
                 {errors.venue && <p className="text-red-400 text-sm mt-2.5 font-medium">{errors.venue}</p>}
@@ -298,10 +296,10 @@ const CreateEvent = () => {
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
-                  className={`w-full bg-[#090e17] border rounded-lg py-3.5 px-5 text-white focus:outline-none transition-all ${
+                  className={`w-full bg-slate-50 border rounded-lg py-3.5 px-5 text-slate-900 focus:outline-none transition-all ${
                     errors.category
                       ? 'border-red-500/60 focus:border-red-400'
-                      : 'border-gray-800 hover:border-gray-700 focus:border-[#00d09c]'
+                      : 'border-slate-200 hover:border-slate-300 focus:border-indigo-500'
                   }`}
                 >
                   <option value="">Select a category</option>
@@ -323,10 +321,10 @@ const CreateEvent = () => {
                   onChange={handleChange}
                   placeholder="Leave blank for unlimited"
                   min="1"
-                  className={`w-full bg-[#090e17] border rounded-lg py-3.5 px-5 text-white placeholder:text-gray-600 focus:outline-none transition-all ${
+                  className={`w-full bg-slate-50 border rounded-lg py-3.5 px-5 text-slate-900 placeholder:text-gray-600 focus:outline-none transition-all ${
                     errors.maxAttendees
                       ? 'border-red-500/60 focus:border-red-400'
-                      : 'border-gray-800 hover:border-gray-700 focus:border-[#00d09c]'
+                      : 'border-slate-200 hover:border-slate-300 focus:border-indigo-500'
                   }`}
                 />
                 {errors.maxAttendees && <p className="text-red-400 text-sm mt-2.5 font-medium">{errors.maxAttendees}</p>}
@@ -334,8 +332,8 @@ const CreateEvent = () => {
             </div>
 
             {/* Publish Toggle */}
-            <div className="bg-[#090e17] border border-gray-800 rounded-lg p-5 flex items-center justify-between">
-              <label htmlFor="isPublished" className="text-white font-bold cursor-pointer">
+            <div className="bg-slate-50 border border-slate-200 rounded-lg p-5 flex items-center justify-between">
+              <label htmlFor="isPublished" className="text-slate-900 font-bold cursor-pointer">
                 Publish this event immediately
               </label>
               <input
@@ -349,18 +347,18 @@ const CreateEvent = () => {
             </div>
 
             {/* Submit Button */}
-            <div className="flex gap-4 pt-6 border-t border-gray-800">
+            <div className="flex gap-4 pt-6 border-t border-slate-200">
               <button
                 type="button"
                 onClick={() => navigate('/module3')}
-                className="flex-1 bg-gray-800/60 hover:bg-gray-700/70 text-gray-300 py-3.5 rounded-lg font-bold transition-all active:scale-95"
+                className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3.5 rounded-lg font-bold transition-all active:scale-95"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 bg-[#00d09c] hover:bg-[#00e6ae] text-gray-900 py-3.5 rounded-lg font-black transition-all shadow-[0_6px_20px_rgba(0,208,156,0.3)] active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50"
+                className="flex-1 bg-indigo-600 hover:bg-[#00e6ae] text-gray-900 py-3.5 rounded-lg font-black transition-all shadow-[0_6px_20px_rgba(0,208,156,0.3)] active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <Save size={18} />
                 {loading ? 'Creating...' : 'Create Event'}
