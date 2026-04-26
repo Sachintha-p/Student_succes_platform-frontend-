@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
-import { 
-  User, Briefcase, FileText, CheckCircle, 
-  XCircle, Search, AlertTriangle, Loader2, Calendar, ClipboardList
+import {
+  User, Briefcase, CheckCircle,
+  XCircle, Search, AlertTriangle, Loader2, Calendar, ClipboardList, Info
 } from 'lucide-react';
 
 const AdminJobApplications = () => {
@@ -84,31 +84,45 @@ const AdminJobApplications = () => {
     <div className="flex min-h-screen bg-slate-50 text-slate-600 font-sans">
       <Sidebar />
       <main className="flex-1 ml-72 p-10">
-        <header className="flex justify-between items-center mb-10 text-left">
-          <div>
-            <h2 className="text-3xl font-bold text-slate-900">Job Applications 📂</h2>
-            <p className="text-gray-500">Review and manage student career requests.</p>
+        <header className="relative overflow-hidden bg-white border border-slate-200 p-10 rounded-[2.5rem] mb-12 shadow-xl shadow-slate-200/50 text-left">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50 rounded-full blur-[80px] -mr-32 -mt-32" />
+          <div className="relative z-10 flex flex-col xl:flex-row justify-between items-start xl:items-center gap-10">
+            <div className="max-w-2xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="inline-flex items-center gap-2 bg-indigo-50 text-indigo-600 px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest border border-indigo-100 shadow-sm">
+                  <Info size={14} /> Admin Dashboard
+                </div>
+                <div className="inline-flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-sm">
+                  <ClipboardList size={14} /> {applications.length} Applications
+                </div>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">
+                Job <span className="text-indigo-600">Applications</span>
+              </h1>
+              <p className="text-slate-400 text-base font-medium italic">Review and manage student career requests.</p>
+            </div>
+
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-black text-slate-700 outline-none focus:border-indigo-500 shadow-sm appearance-none cursor-pointer"
+            >
+              <option value="ALL">All Statuses</option>
+              <option value="PENDING">Pending</option>
+              <option value="SHORTLISTED">Shortlisted</option>
+              <option value="REJECTED">Rejected</option>
+            </select>
           </div>
-          <select 
-            value={filterStatus} 
-            onChange={(e) => setFilterStatus(e.target.value)}
-            className="bg-white border border-slate-200 rounded-xl px-4 py-2 text-sm font-bold outline-none focus:border-indigo-500"
-          >
-            <option value="ALL">All Statuses</option>
-            <option value="PENDING">Pending</option>
-            <option value="SHORTLISTED">Shortlisted</option>
-            <option value="REJECTED">Rejected</option>
-          </select>
         </header>
 
-        <div className="relative group mb-8 text-left">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={20} />
-          <input 
-            type="text" 
-            placeholder="Search by student or job title..." 
-            value={searchTerm} 
-            onChange={(e) => setSearchTerm(e.target.value)} 
-            className="w-full bg-white border border-slate-200 rounded-2xl py-4 pl-12 pr-4 text-slate-900 focus:border-indigo-500 outline-none" 
+        <div className="relative group w-full mb-12">
+          <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors" size={22} />
+          <input
+            type="text"
+            placeholder="Search by student or job title..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full bg-white border border-slate-200 rounded-[1.8rem] py-6 pl-16 pr-8 text-slate-900 focus:outline-none focus:border-indigo-500 transition-all shadow-xl shadow-slate-200/40 text-sm font-bold placeholder:text-slate-300"
           />
         </div>
 
