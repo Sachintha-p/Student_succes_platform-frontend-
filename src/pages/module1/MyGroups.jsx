@@ -142,7 +142,8 @@ const MyGroups = () => {
     try {
       const response = await fetch(`http://localhost:8080/api/v1/teams/${joinRequestModal.groupId}/join`, {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: joinMessage })
       });
       if (response.ok) {
         alert("Join Request Sent! ✨");
@@ -335,6 +336,201 @@ const MyGroups = () => {
           </div>
         )}
       </main>
+
+      {/* === CREATE GROUP MODAL === */}
+      {showCreateModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-lg rounded-[2rem] shadow-2xl border border-slate-200 overflow-hidden">
+            <div className="flex justify-between items-center px-8 py-6 border-b border-slate-100">
+              <h3 className="text-xl font-black text-slate-900">Start New Team</h3>
+              <button onClick={() => setShowCreateModal(false)} className="p-2 hover:bg-slate-100 rounded-xl transition-colors"><X size={18} className="text-slate-500" /></button>
+            </div>
+            <form onSubmit={handleCreateGroup} className="p-8 space-y-5">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Team Name *</label>
+                <input required value={newGroup.name} onChange={e => setNewGroup({...newGroup, name: e.target.value})}
+                  placeholder="e.g. Alpha Dev Squad"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-500 transition-all" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Subject</label>
+                  <input value={newGroup.subject} onChange={e => setNewGroup({...newGroup, subject: e.target.value})}
+                    placeholder="e.g. SE3040"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-500 transition-all" />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Max Members *</label>
+                  <input required type="number" min="2" max="10" value={newGroup.maxMembers}
+                    onChange={e => setNewGroup({...newGroup, maxMembers: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-500 transition-all" />
+                </div>
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Description</label>
+                <textarea rows={3} value={newGroup.description} onChange={e => setNewGroup({...newGroup, description: e.target.value})}
+                  placeholder="What is this team working on?"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-500 transition-all resize-none" />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Required Skills (comma separated)</label>
+                <input value={newGroup.requiredSkills} onChange={e => setNewGroup({...newGroup, requiredSkills: e.target.value})}
+                  placeholder="e.g. React, Java, Spring Boot"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-500 transition-all" />
+              </div>
+              <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                <button type="button" onClick={() => setShowCreateModal(false)}
+                  className="px-6 py-3 rounded-xl font-black text-xs text-slate-500 border border-slate-200 hover:bg-slate-50 uppercase tracking-widest transition-colors">Cancel</button>
+                <button type="submit"
+                  className="bg-slate-900 hover:bg-indigo-600 text-white px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all active:scale-95 shadow-lg">
+                  Launch Team
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* === JOIN REQUEST MODAL === */}
+      {joinRequestModal.isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-md rounded-[2rem] shadow-2xl border border-slate-200 overflow-hidden">
+            <div className="flex justify-between items-center px-8 py-6 border-b border-slate-100">
+              <div>
+                <h3 className="text-xl font-black text-slate-900">Request to Join</h3>
+                <p className="text-xs text-slate-400 mt-1 font-medium">{joinRequestModal.groupName}</p>
+              </div>
+              <button onClick={() => setJoinRequestModal({isOpen: false, groupId: null, groupName: ''})} className="p-2 hover:bg-slate-100 rounded-xl transition-colors"><X size={18} className="text-slate-500" /></button>
+            </div>
+            <form onSubmit={handleRequestJoinSubmit} className="p-8 space-y-5">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Message to Team Leader</label>
+                <textarea rows={4} value={joinMessage} onChange={e => setJoinMessage(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-500 transition-all resize-none" />
+              </div>
+              <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                <button type="button" onClick={() => setJoinRequestModal({isOpen: false, groupId: null, groupName: ''})}
+                  className="px-6 py-3 rounded-xl font-black text-xs text-slate-500 border border-slate-200 hover:bg-slate-50 uppercase tracking-widest transition-colors">Cancel</button>
+                <button type="submit" disabled={actionLoading}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all active:scale-95 shadow-lg flex items-center gap-2 disabled:opacity-60">
+                  {actionLoading ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />} Send Request
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* === INVITE MODAL === */}
+      {inviteModal.isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-md rounded-[2rem] shadow-2xl border border-slate-200 overflow-hidden">
+            <div className="flex justify-between items-center px-8 py-6 border-b border-slate-100">
+              <div>
+                <h3 className="text-xl font-black text-slate-900">Invite Student</h3>
+                <p className="text-xs text-slate-400 mt-1 font-medium">{inviteModal.groupName}</p>
+              </div>
+              <button onClick={() => setInviteModal({isOpen: false, groupId: null, groupName: ''})} className="p-2 hover:bg-slate-100 rounded-xl transition-colors"><X size={18} className="text-slate-500" /></button>
+            </div>
+            <form onSubmit={handleSendInvite} className="p-8 space-y-5">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Student Email *</label>
+                <input required type="email" value={inviteEmail} onChange={e => setInviteEmail(e.target.value)}
+                  placeholder="student@sliit.lk"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-500 transition-all" />
+              </div>
+              <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                <button type="button" onClick={() => setInviteModal({isOpen: false, groupId: null, groupName: ''})}
+                  className="px-6 py-3 rounded-xl font-black text-xs text-slate-500 border border-slate-200 hover:bg-slate-50 uppercase tracking-widest transition-colors">Cancel</button>
+                <button type="submit" disabled={inviteLoading}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all active:scale-95 shadow-lg flex items-center gap-2 disabled:opacity-60">
+                  {inviteLoading ? <Loader2 size={14} className="animate-spin" /> : <Mail size={14} />} Send Invite
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* === MANAGE MODAL (Owner / Member) === */}
+      {manageModal.isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-lg rounded-[2rem] shadow-2xl border border-slate-200 overflow-hidden">
+            <div className="flex justify-between items-center px-8 py-6 border-b border-slate-100">
+              <div>
+                <h3 className="text-xl font-black text-slate-900">
+                  {manageModal.mode === 'owner' ? 'Manage Team' : 'Team Details'}
+                </h3>
+                <p className="text-xs text-slate-400 mt-1 font-medium">{manageModal.group?.name}</p>
+              </div>
+              <button onClick={() => setManageModal({isOpen: false, mode: '', group: null})} className="p-2 hover:bg-slate-100 rounded-xl transition-colors"><X size={18} className="text-slate-500" /></button>
+            </div>
+
+            {manageModal.mode === 'owner' ? (
+              <form onSubmit={handleEditSubmit} className="p-8 space-y-5">
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Team Name *</label>
+                  <input required value={editGroupData.name} onChange={e => setEditGroupData({...editGroupData, name: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-500 transition-all" />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Subject</label>
+                    <input value={editGroupData.subject} onChange={e => setEditGroupData({...editGroupData, subject: e.target.value})}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-500 transition-all" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Max Members</label>
+                    <input type="number" min="2" max="10" value={editGroupData.maxMembers} onChange={e => setEditGroupData({...editGroupData, maxMembers: e.target.value})}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-500 transition-all" />
+                  </div>
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Description</label>
+                  <textarea rows={3} value={editGroupData.description} onChange={e => setEditGroupData({...editGroupData, description: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-500 transition-all resize-none" />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Required Skills (comma separated)</label>
+                  <input value={editGroupData.requiredSkills} onChange={e => setEditGroupData({...editGroupData, requiredSkills: e.target.value})}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 outline-none focus:border-indigo-500 transition-all" />
+                </div>
+                <div className="flex justify-between items-center pt-4 border-t border-slate-100">
+                  <button type="button" onClick={handleDeleteGroup} disabled={actionLoading}
+                    className="flex items-center gap-2 text-red-500 hover:text-white hover:bg-red-500 border border-red-200 hover:border-red-500 px-5 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all disabled:opacity-50">
+                    <Trash2 size={13} /> Delete Team
+                  </button>
+                  <div className="flex gap-3">
+                    <button type="button" onClick={() => setManageModal({isOpen: false, mode: '', group: null})}
+                      className="px-6 py-3 rounded-xl font-black text-xs text-slate-500 border border-slate-200 hover:bg-slate-50 uppercase tracking-widest transition-colors">Cancel</button>
+                    <button type="submit" disabled={actionLoading}
+                      className="bg-slate-900 hover:bg-indigo-600 text-white px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all active:scale-95 shadow-lg flex items-center gap-2 disabled:opacity-60">
+                      {actionLoading ? <Loader2 size={14} className="animate-spin" /> : <Edit3 size={14} />} Save Changes
+                    </button>
+                  </div>
+                </div>
+              </form>
+            ) : (
+              <div className="p-8 space-y-6">
+                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 space-y-3">
+                  <div className="flex justify-between text-sm"><span className="text-slate-400 font-bold">Subject</span><span className="font-black text-slate-900">{manageModal.group?.subject || '—'}</span></div>
+                  <div className="flex justify-between text-sm"><span className="text-slate-400 font-bold">Members</span><span className="font-black text-slate-900">{manageModal.group?.currentMembers || 1} / {manageModal.group?.maxMembers}</span></div>
+                  <div className="flex justify-between text-sm"><span className="text-slate-400 font-bold">Status</span><span className="font-black text-emerald-600">{manageModal.group?.open ? 'Open' : 'Closed'}</span></div>
+                </div>
+                <div className="flex justify-between items-center pt-4 border-t border-slate-100">
+                  <button onClick={handleLeaveGroup} disabled={actionLoading}
+                    className="flex items-center gap-2 text-red-500 hover:text-white hover:bg-red-500 border border-red-200 hover:border-red-500 px-5 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all disabled:opacity-50">
+                    {actionLoading ? <Loader2 size={13} className="animate-spin" /> : <LogOut size={13} />} Leave Team
+                  </button>
+                  <button onClick={() => setManageModal({isOpen: false, mode: '', group: null})}
+                    className="px-6 py-3 rounded-xl font-black text-xs text-slate-500 border border-slate-200 hover:bg-slate-50 uppercase tracking-widest transition-colors">Close</button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

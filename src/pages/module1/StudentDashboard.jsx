@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
-import { 
-  Bell, GraduationCap, TrendingUp, ShieldCheck, 
+import {
+  Bell, GraduationCap, TrendingUp, ShieldCheck,
   Mail, BookOpen, Edit3, X, Loader2, Save, User as UserIcon,
   Award, ChevronRight, Target, Zap, Clock, CheckCircle2,
-  Users, Sparkles
+  Users, Sparkles, ArrowRight
 } from 'lucide-react';
 
 const StudentDashboard = () => {
@@ -88,7 +88,7 @@ const StudentDashboard = () => {
 
       // 4. Fetch My Teams
       try {
-        const groupRes = await fetch('http://localhost:8080/api/v1/teams/my?page=0&size=1', {
+        const groupRes = await fetch('http://localhost:8080/api/v1/teams/my-teams?page=0&size=1', {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (groupRes.ok) {
