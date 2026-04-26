@@ -222,7 +222,7 @@ const EventList = () => {
                           : 'bg-indigo-600 hover:bg-[#00e6ae] text-gray-900 shadow-[0_6px_20px_rgba(0,208,156,0.3)]'
                       }`}
                     >
-                      {rsvpStatus[event.id] === 'ATTENDING' ? 'Ã¢Å“â€œ RSVPed' : 'RSVP Now'}
+                      {rsvpStatus[event.id] === 'ATTENDING' ? '✓ RSVPed' : 'RSVP Now'}
                     </button>
                   </div>
                 </div>
