@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   User, Briefcase, Search, Users, LogOut, Brain, 
@@ -32,8 +32,9 @@ const Sidebar = () => {
           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
         });
         if (res.ok) {
-          const data = await res.json();
-          setUserData({ fullName: data.fullName, email: data.email, role: data.role });
+          const raw = await res.json();
+          const profile = raw.data || raw;
+          setUserData({ fullName: profile.fullName, email: profile.email, role: profile.role });
         }
       } catch (err) { console.error('Sidebar profile fetch error:', err); }
     };
