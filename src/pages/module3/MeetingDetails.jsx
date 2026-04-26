@@ -184,7 +184,7 @@ const MeetingDetails = () => {
                   ? 'bg-green-500/10 text-green-400 border-green-500/20'
                   : 'bg-indigo-600/10 text-indigo-600 border-[#00d09c]/20'
               }`}>
-                {isFinalized ? 'Ã¢Å“â€œ Finalized' : 'Pending'}
+                {isFinalized ? '✓ Finalized' : 'Pending'}
               </span>
             </div>
             <p className="text-gray-500 text-sm">Coordinate availability and finalize meeting time</p>

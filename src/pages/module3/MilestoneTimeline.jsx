@@ -249,13 +249,13 @@ const MilestoneTimeline = () => {
 
                                       {overdueStatus === 'overdue' && (
                                         <span className="text-xs font-bold bg-red-500/15 text-red-400 px-2.5 py-1 rounded-full border border-red-500/30">
-                                          Ã¢Å¡Â  Overdue
+                                          ⚠ Overdue
                                         </span>
                                       )}
 
                                       {overdueStatus === 'upcoming' && (
                                         <span className="text-xs font-bold bg-yellow-500/15 text-yellow-400 px-2.5 py-1 rounded-full border border-yellow-500/30">
-                                          Ã¢ÂÂ° Due Soon
+                                          ⏰ Due Soon
                                         </span>
                                       )}
                                     </div>

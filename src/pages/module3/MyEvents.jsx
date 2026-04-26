@@ -126,7 +126,7 @@ const MyEvents = () => {
 
                       <div className="p-6 pt-4 mt-auto">
                         <button className="w-full bg-indigo-600 hover:bg-[#00e6ae] text-gray-900 py-2.5 rounded-lg font-bold transition-all flex items-center justify-center gap-2 active:scale-95 shadow-[0_4px_12px_rgba(0,208,156,0.2)]">
-                          Ã¢Å“â€œ Going
+                          ✓ Going
                         </button>
                       </div>
                     </div>
@@ -161,7 +161,7 @@ const MyEvents = () => {
                           {event.title}
                         </h4>
                         <p className="text-gray-500 text-sm mt-1">
-                          {formatDate(event.eventDate)} Ã¢â‚¬Â¢ {event.category}
+                          {formatDate(event.eventDate)} • {event.category}
                         </p>
                       </div>
                       <span className="text-gray-600 text-sm font-bold">Attended</span>

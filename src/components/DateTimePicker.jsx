@@ -105,7 +105,7 @@ export const DatePicker = ({ value, onChange, error, label, required = false, mi
         <span>
           {value ? selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Select date'}
         </span>
-        <span>Ã°Å¸â€œâ€¦</span>
+        <span>📅</span>
       </button>
 
       {error && (
@@ -198,7 +198,7 @@ export const TimePicker = ({ value, onChange }) => {
         </select>
       </div>
 
-      <div className="text-2xl text-indigo-600 font-bold">Ã°Å¸â€¢Â</div>
+      <div className="text-2xl text-indigo-600 font-bold">:</div>
     </div>
   );
 };

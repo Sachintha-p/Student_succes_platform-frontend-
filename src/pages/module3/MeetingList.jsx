@@ -195,7 +195,7 @@ const MeetingList = () => {
                           ? 'bg-green-500/15 text-green-400 border-green-500/30'
                           : 'bg-indigo-600/15 text-indigo-600 border-[#00d09c]/30'
                       }`}>
-                        {isFinalized(meeting) ? 'Ã¢Å“â€œ Finalized' : 'Pending'}
+                        {isFinalized(meeting) ? '✓ Finalized' : 'Pending'}
                       </span>
                     </div>
                     <h3 className="text-lg font-bold text-slate-900 mb-3 line-clamp-2 group-hover:text-indigo-600 transition-colors">

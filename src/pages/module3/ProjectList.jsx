@@ -255,7 +255,7 @@ const ProjectList = () => {
                           ? 'bg-yellow-500/15 text-yellow-400 border-yellow-500/30'
                           : 'bg-indigo-600/15 text-indigo-600 border-[#00d09c]/30'
                       }`}>
-                        {isOverdue ? 'Ã¢Å¡Â  Overdue' : daysLeft <= 0 ? 'Due Today' : `${daysLeft}d left`}
+                        {isOverdue ? '⚠ Overdue' : daysLeft <= 0 ? 'Due Today' : `${daysLeft}d left`}
                       </span>
                     </div>
 

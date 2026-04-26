@@ -130,7 +130,7 @@ const Module3DashboardLogin = () => {
                   value={formData.password}
                   onChange={handleChange}
                   disabled={loading}
-                  placeholder="Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢"
+                  placeholder="••••••••"
                   className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 focus:border-indigo-500 rounded-xl py-3.5 pl-12 pr-12 text-slate-900 focus:outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg placeholder:text-gray-600"
                 />
                 <button

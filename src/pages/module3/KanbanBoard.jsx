@@ -340,12 +340,12 @@ const KanbanBoard = () => {
                   </span>
                   {task.isOverdue && (
                     <span className="text-[10px] font-bold bg-red-500/15 text-red-400 px-2.5 py-1.5 rounded-full border border-red-500/30">
-                      Ã¢Å¡Â  Overdue
+                      ⚠ Overdue
                     </span>
                   )}
                   {task.isUpcoming && (
                     <span className="text-[10px] font-bold bg-blue-500/15 text-blue-400 px-2.5 py-1.5 rounded-full border border-blue-500/30">
-                      Ã°Å¸â€œâ€¦ Upcoming
+                      📅 Upcoming
                     </span>
                   )}
                 </div>

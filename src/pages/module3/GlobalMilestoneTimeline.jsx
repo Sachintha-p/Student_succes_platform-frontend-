@@ -9,6 +9,7 @@ import {
   Flag,
 } from 'lucide-react';
 import Sidebar from "../../components/Sidebar";
+import Module3Header from "../../components/Module3Header";
 
 const GlobalMilestoneTimeline = () => {
   const [data, setData] = useState(null);
